@@ -22,6 +22,12 @@ dis = pygame.display.set_mode((disx, disy))
 
 fps = 60
 
+# Player Values
+psizex = 30
+psizey = 50
+pspeed = 15
+plives = 3
+
 # Displaying Text
 font = pygame.font.Font('freesansbold.ttf', 32)
 def message (msg,colour,x,y):
