@@ -21,8 +21,6 @@ displaysize = [800,600]
 dis = pygame.display.set_mode((displaysize[0], displaysize[1]))
 startup_screen = True
 
-fps = 60
-
 # Player Values
 p1size = [30,50]
 p1speed = 10
@@ -36,18 +34,22 @@ def message (msg,colour,x,y):
 def move_player(speed, position, joystick):
     position[0] += joystick[0] * speed
     position[1] += joystick[1] * speed
-while not game_over:
+    return position
 
+while not game_over:
+    sleep(0.1)
     # Closes Window if X is pressed
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             game_over = True
     keys = pygame.key.get_pressed()
 
-    joystick = []
-    joystick.append(joystick_get_x())
-    joystick.append(joystick_get_y())
+    joystick = [0.5,-0.5]
+    #joystick.append(joystick_get_x())
+    #joystick.append(joystick_get_y())
     print(joystick)
+
+    p1pos = move_player(p1speed, p1pos, joystick)
     # Visual output
     dis.fill(black)
     pygame.draw.rect(dis, red, [p1pos[0], p1pos[1], p1size[0], p1size[1]])
