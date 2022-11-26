@@ -29,6 +29,12 @@ p1speed = 4
 p1pos = [displaysize[0]/2,displaysize[1]/2]
 p1bullets = []
 
+p2size = [30, 50]
+p2speed = 4
+p2pos = [displaysize[0]/3, displaysize[1]/3]
+p2bullets = []
+
+
 # Bullet Values
 bulletsize = 5
 bulletspeed = 15
@@ -65,7 +71,7 @@ while not game_over:
             game_over = True
     keys = pygame.key.get_pressed()
 
-#Joystick Movement
+    #Joystick Movement
     joystick = [0, 0]
     if keys[pygame.K_w]:
         joystick[1] = -1
@@ -79,7 +85,19 @@ while not game_over:
     #joystick.append(joystick_get_y())
     print(joystick)
 
+    #Keyboard Movement
+    keycontrols = [0, 0]
+    if keys[pygame.K_UP]:
+        keycontrols[1] = -1
+    elif keys[pygame.K_DOWN]:
+        keycontrols[1] = 1
+    if keys[pygame.K_LEFT]:
+        keycontrols[0] = -1
+    elif keys[pygame.K_RIGHT]:
+        keycontrols[0] = 1
+    # Player Positions
     p1pos = move_player(p1speed, p1pos, joystick)
+    p2pos = move_player(p2speed, p2pos, keycontrols)
 
     if keys[pygame.K_SPACE]:
         bulletposition = [p1pos[0]+p1size[0]/2,p1pos[1] + p1size[1]/2]
@@ -91,6 +109,7 @@ while not game_over:
     # Visual output
     dis.fill(black)
     pygame.draw.rect(dis, red, [p1pos[0], p1pos[1], p1size[0], p1size[1]])
+    pygame.draw.rect(dis, blue, [p2pos[0], p2pos[1], p2size[0], p2size[1]])
     for bullet in p1bullets:
         new_pos = move_bullet(bulletspeed,bullet[0],bullet[1])
         pygame.draw.circle(dis, white,new_pos, bulletsize )
