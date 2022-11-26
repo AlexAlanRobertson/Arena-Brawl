@@ -1,4 +1,5 @@
 import pygame
+from engi1020.arduino.api import *
 from time import sleep
 import random
 
@@ -43,6 +44,8 @@ while not game_over:
             game_over = True
     keys = pygame.key.get_pressed()
 
+    joystick = analog_read(2)
+    print(joystick)
     # Visual output
     dis.fill(black)
     pygame.draw.rect(dis, red, [p1pos[0], p1pos[1], p1size[0], p1size[1]])
