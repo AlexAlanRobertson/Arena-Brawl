@@ -29,14 +29,16 @@ p1speed = 4
 p1pos = [displaysize[0]/2,displaysize[1]/2]
 p1bullets = []
 p1bulletcooldown = 0
-p1lives = 5
+p1lives = 3
+p1score = 0
 
 p2size = [30, 50]
 p2speed = 4
 p2pos = [displaysize[0]/3, displaysize[1]/3]
 p2bullets = []
 p2bulletcooldown = 0
-p2lives = 5
+p2lives = 3
+p2score = 0
 
 # Bullet Values
 bulletsize = 5
@@ -123,28 +125,23 @@ while not game_over:
 
     # Visual output
     dis.fill(black)
-    p1 = pygame.draw.rect(dis, red, [p1pos[0], p1pos[1], p1size[0], p1size[1]])
-    p2 = pygame.draw.rect(dis, blue, [p2pos[0], p2pos[1], p2size[0], p2size[1]])
-
-    #Obstacles
-    o1 = pygame.draw.rect(dis, yellow, [displaysize[0]/3, displaysize[1]/3, 35, 35])
-    o2 = pygame.draw.rect(dis, yellow, [displaysize[0]*2/3, displaysize[1]/3, 30, 30])
-    o3 = pygame.draw.rect(dis, yellow, [displaysize[0]/3, displaysize[1]*2/3, 25, 25])
-    o4 = pygame.draw.rect(dis, yellow, [displaysize[0]*2/3, displaysize[1]*2/3, 40, 40])
-
-    o5 = pygame.draw.rect(dis, yellow, [displaysize[0]*1/6, displaysize[1]*1/6, 35, 35])
-    o6 = pygame.draw.rect(dis, yellow, [displaysize[0]*5/6, displaysize[1]*5/6, 30, 30])
-    o7 = pygame.draw.rect(dis, yellow, [displaysize[0]*1/6, displaysize[1]*5/6, 25, 25])
-    o8 = pygame.draw.rect(dis, yellow, [displaysize[0]*5/6, displaysize[1]*1/6, 20, 20])
-
-    o9 = pygame.draw.rect(dis, yellow, [displaysize[0] * 1 / 6, displaysize[1]*1/2, 20, 20])
-    o10 = pygame.draw.rect(dis, yellow, [displaysize[0]*1/2, displaysize[1]*1/6, 40, 40])
-    o11 = pygame.draw.rect(dis, yellow, [displaysize[0]*1/2, displaysize[1]*5/6, 30, 30])
-    o12 = pygame.draw.rect(dis, yellow, [displaysize[0]*5/6, displaysize[1]*1/2, 25, 25])
-    o13 = pygame.draw.rect(dis, yellow, [displaysize[0]*1/2, displaysize[1]*6/10, 35, 35])
+    o1 = pygame.draw.rect(dis, yellow, [displaysize[0] / 3, displaysize[1] / 3, 35, 35])
+    o2 = pygame.draw.rect(dis, yellow, [displaysize[0] * 2 / 3, displaysize[1] / 3, 30, 30])
+    o3 = pygame.draw.rect(dis, yellow, [displaysize[0] / 3, displaysize[1] * 2 / 3, 25, 25])
+    o4 = pygame.draw.rect(dis, yellow, [displaysize[0] * 2 / 3, displaysize[1] * 2 / 3, 40, 40])
+    o5 = pygame.draw.rect(dis, yellow, [displaysize[0] * 1 / 6, displaysize[1] * 1 / 6, 35, 35])
+    o6 = pygame.draw.rect(dis, yellow, [displaysize[0] * 5 / 6, displaysize[1] * 5 / 6, 30, 30])
+    o7 = pygame.draw.rect(dis, yellow, [displaysize[0] * 1 / 6, displaysize[1] * 5 / 6, 25, 25])
+    o8 = pygame.draw.rect(dis, yellow, [displaysize[0] * 5 / 6, displaysize[1] * 1 / 6, 20, 20])
+    o9 = pygame.draw.rect(dis, yellow, [displaysize[0] * 1 / 6, displaysize[1] * 1 / 2, 20, 20])
+    o10 = pygame.draw.rect(dis, yellow, [displaysize[0] * 1 / 2, displaysize[1] * 1 / 6, 40, 40])
+    o11 = pygame.draw.rect(dis, yellow, [displaysize[0] * 1 / 2, displaysize[1] * 5 / 6, 30, 30])
+    o12 = pygame.draw.rect(dis, yellow, [displaysize[0] * 5 / 6, displaysize[1] * 1 / 2, 25, 25])
+    o13 = pygame.draw.rect(dis, yellow, [displaysize[0] * 1 / 2, displaysize[1] * 6 / 10, 35, 35])
     oblist = [o1, o2, o3, o4, o5, o6, o7, o8, o9, o10, o11, o12, o13]
 
-
+    p1 = pygame.draw.rect(dis, red, [p1pos[0], p1pos[1], p1size[0], p1size[1]])
+    p2 = pygame.draw.rect(dis, blue, [p2pos[0], p2pos[1], p2size[0], p2size[1]])
     for bullet in p1bullets:
         new_pos = move_bullet(bulletspeed, bullet[0], bullet[1])
         b = pygame.draw.circle(dis, white, new_pos, bulletsize)
@@ -157,10 +154,32 @@ while not game_over:
         if pygame.Rect.colliderect(b,p1):
             p1lives -= 1
             p2bullets.remove(bullet)
-    message("P1 Lives: " + str(p1lives), white, 0, 0)
-    message("P2 Lives: " + str(p2lives), white, displaysize[0] / 1.3, 0)
-
+    message("P1 Score: " + str(p1score), white, 0, 0)
+    message("P2 Score: " + str(p2score), white, displaysize[0] / 1.3, 0)
     pygame.display.update()
+
+    #Win conditions
+    if p1lives == 0:
+        sleep(1)
+        p2score += 1
+        p1lives = 3
+    elif p2lives == 0:
+        sleep(1)
+        p1score += 1
+        p2lives = 3
+
+    if p1score == 5:
+        dis.fill(black)
+        message("Player One Wins", red, displaysize[0]/3, displaysize[1]/2)
+        pygame.display.update()
+        sleep(3)
+        game_over = True
+    if p2score == 5:
+        dis.fill(black)
+        message("Player Two Wins", blue, displaysize[0]/3, displaysize[1]/2)
+        pygame.display.update()
+        sleep(3)
+        game_over = True
     fps.tick(60)
 pygame.quit()
 quit()
