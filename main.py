@@ -123,31 +123,23 @@ while not game_over:
         p2bullets.append([bulletposition, 0.8])
         p2bulletcooldown = 0.25
 
-    #Obstacles
-    o1 = pygame.draw.rect(dis, yellow, [displaysize[0]/3, displaysize[1]/3, 35, 35])
-    o2 = pygame.draw.rect(dis, yellow, [displaysize[0]*2/3, displaysize[1]/3, 30, 30])
-    o3 = pygame.draw.rect(dis, yellow, [displaysize[0]/3, displaysize[1]*2/3, 25, 25])
-    o4 = pygame.draw.rect(dis, yellow, [displaysize[0]*2/3, displaysize[1]*2/3, 40, 40])
-
-    o5 = pygame.draw.rect(dis, yellow, [displaysize[0]*1/6, displaysize[1]*1/6, 35, 35])
-    o6 = pygame.draw.rect(dis, yellow, [displaysize[0]*5/6, displaysize[1]*5/6, 30, 30])
-    o7 = pygame.draw.rect(dis, yellow, [displaysize[0]*1/6, displaysize[1]*5/6, 25, 25])
-    o8 = pygame.draw.rect(dis, yellow, [displaysize[0]*5/6, displaysize[1]*1/6, 20, 20])
-
-    o9 = pygame.draw.rect(dis, yellow, [displaysize[0] * 1 / 6, displaysize[1]*1/2, 20, 20])
-    o10 = pygame.draw.rect(dis, yellow, [displaysize[0]*1/2, displaysize[1]*1/6, 40, 40])
-    o11 = pygame.draw.rect(dis, yellow, [displaysize[0]*1/2, displaysize[1]*5/6, 30, 30])
-    o12 = pygame.draw.rect(dis, yellow, [displaysize[0]*5/6, displaysize[1]*1/2, 25, 25])
-    o13 = pygame.draw.rect(dis, yellow, [displaysize[0]*1/2, displaysize[1]*6/10, 35, 35])
-    oblist = [o1, o2, o3, o4, o5, o6, o7, o8, o9, o10, o11, o12, o13]
-
-
-
-
-
-
     # Visual output
     dis.fill(black)
+    o1 = pygame.draw.rect(dis, yellow, [displaysize[0] / 3, displaysize[1] / 3, 35, 35])
+    o2 = pygame.draw.rect(dis, yellow, [displaysize[0] * 2 / 3, displaysize[1] / 3, 30, 30])
+    o3 = pygame.draw.rect(dis, yellow, [displaysize[0] / 3, displaysize[1] * 2 / 3, 25, 25])
+    o4 = pygame.draw.rect(dis, yellow, [displaysize[0] * 2 / 3, displaysize[1] * 2 / 3, 40, 40])
+    o5 = pygame.draw.rect(dis, yellow, [displaysize[0] * 1 / 6, displaysize[1] * 1 / 6, 35, 35])
+    o6 = pygame.draw.rect(dis, yellow, [displaysize[0] * 5 / 6, displaysize[1] * 5 / 6, 30, 30])
+    o7 = pygame.draw.rect(dis, yellow, [displaysize[0] * 1 / 6, displaysize[1] * 5 / 6, 25, 25])
+    o8 = pygame.draw.rect(dis, yellow, [displaysize[0] * 5 / 6, displaysize[1] * 1 / 6, 20, 20])
+    o9 = pygame.draw.rect(dis, yellow, [displaysize[0] * 1 / 6, displaysize[1] * 1 / 2, 20, 20])
+    o10 = pygame.draw.rect(dis, yellow, [displaysize[0] * 1 / 2, displaysize[1] * 1 / 6, 40, 40])
+    o11 = pygame.draw.rect(dis, yellow, [displaysize[0] * 1 / 2, displaysize[1] * 5 / 6, 30, 30])
+    o12 = pygame.draw.rect(dis, yellow, [displaysize[0] * 5 / 6, displaysize[1] * 1 / 2, 25, 25])
+    o13 = pygame.draw.rect(dis, yellow, [displaysize[0] * 1 / 2, displaysize[1] * 6 / 10, 35, 35])
+    oblist = [o1, o2, o3, o4, o5, o6, o7, o8, o9, o10, o11, o12, o13]
+
     p1 = pygame.draw.rect(dis, red, [p1pos[0], p1pos[1], p1size[0], p1size[1]])
     p2 = pygame.draw.rect(dis, blue, [p2pos[0], p2pos[1], p2size[0], p2size[1]])
     for bullet in p1bullets:
