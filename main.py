@@ -34,7 +34,7 @@ p1score = 0
 
 p2size = [30, 50]
 p2speed = 4
-p2pos = [displaysize[0]/3, displaysize[1]/3]
+p2pos = [0, displaysize[1]/3]
 p2bullets = []
 p2bulletcooldown = 0
 p2lives = 3
@@ -49,9 +49,13 @@ font = pygame.font.Font('freesansbold.ttf', 32)
 def message (msg,colour,x,y):
     mesg = font.render(msg, True, colour)
     dis.blit(mesg, [x, y])
-def move_player(speed, position, joystick):
+def move_player(speed, position, joystick,player):
     position[0] += joystick[0] * speed
     position[1] += joystick[1] * speed
+    for o in oblist:
+        if pygame.Rect.colliderect(player,o):
+            position[0] -= joystick[0] * speed
+            position[1] -= joystick[1] * speed
     if position[0] > displaysize[0] - p1size[0]:
         position[0] = displaysize[0] - p1size[0]
     if position[0] < 0:
@@ -110,18 +114,7 @@ while not game_over:
     elif keys[pygame.K_RIGHT]:
         keycontrols[0] = 1
 
-#Move entities
-    p1pos = move_player(p1speed, p1pos, joystick)
-    p2pos = move_player(p2speed, p2pos, keycontrols)
-    if keys[pygame.K_SPACE] and p1bulletcooldown == 0:
-        bulletposition = [p1pos[0]+p1size[0]/2,p1pos[1] + p1size[1]/2]
-        p1bullets.append([bulletposition,0.8])
-        p1bulletcooldown = 0.25
 
-    if keys[pygame.K_RSHIFT] and p2bulletcooldown == 0:
-        bulletposition = [p2pos[0] + p2size[0]/2, p2pos[1] + p2size[1]/2]
-        p2bullets.append([bulletposition, 0.8])
-        p2bulletcooldown = 0.25
 
     # Visual output
     dis.fill(black)
@@ -187,6 +180,20 @@ while not game_over:
         pygame.display.update()
         sleep(3)
         game_over = True
+
+        # Move entities
+    p1pos = move_player(p1speed, p1pos, joystick, p1)
+    p2pos = move_player(p2speed, p2pos, keycontrols, p2)
+    if keys[pygame.K_SPACE] and p1bulletcooldown == 0:
+        bulletposition = [p1pos[0] + p1size[0] / 2, p1pos[1] + p1size[1] / 2]
+        p1bullets.append([bulletposition, 0.8])
+        p1bulletcooldown = 0.25
+
+    if keys[pygame.K_RSHIFT] and p2bulletcooldown == 0:
+        bulletposition = [p2pos[0] + p2size[0] / 2, p2pos[1] + p2size[1] / 2]
+        p2bullets.append([bulletposition, 0.8])
+        p2bulletcooldown = 0.25
+
     fps.tick(60)
 pygame.quit()
 quit()
