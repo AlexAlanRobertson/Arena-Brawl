@@ -148,12 +148,19 @@ while not game_over:
         if pygame.Rect.colliderect(b,p2):
             p2lives -= 1
             p1bullets.remove(bullet)
+        else:
+            for obstacle in oblist:
+                if pygame.Rect.colliderect(b,obstacle):
+                    p1bullets.remove(bullet)
     for bullet in p2bullets:
         new_pos = move_bullet(bulletspeed, bullet[0], bullet[1])
         b = pygame.draw.circle(dis, white, new_pos, bulletsize)
         if pygame.Rect.colliderect(b,p1):
             p1lives -= 1
             p2bullets.remove(bullet)
+        for obstacle in oblist:
+            if pygame.Rect.colliderect(b,obstacle):
+                p2bullets.remove(bullet)
     message("P1 Score: " + str(p1score), white, 0, 0)
     message("P2 Score: " + str(p2score), white, displaysize[0] / 1.3, 0)
     pygame.display.update()
