@@ -107,7 +107,7 @@ while not game_over:
 
 
     # Visual output
-    dis.fill(black)
+    dis.fill(yellow)
     pygame.draw.rect(dis, red, [p1pos[0], p1pos[1], p1size[0], p1size[1]])
     pygame.draw.rect(dis, blue, [p2pos[0], p2pos[1], p2size[0], p2size[1]])
     for bullet in p1bullets:

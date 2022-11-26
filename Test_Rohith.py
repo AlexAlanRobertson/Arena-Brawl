@@ -57,7 +57,8 @@ def move_bullet(speed, position, angle):
     position [1] += speed * sin(angle)
     return position
 
-
+def checkifhit(bulletposition, playerposition):
+    if
 
 while not game_over:
     #Updates timers
