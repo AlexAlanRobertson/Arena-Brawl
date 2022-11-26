@@ -28,16 +28,16 @@ p1size = [30,50]
 p1speed = 4
 p1pos = [displaysize[0]/2,displaysize[1]/2]
 p1bullets = []
+p1bulletcooldown = 0
 
 p2size = [30, 50]
 p2speed = 4
 p2pos = [displaysize[0]/3, displaysize[1]/3]
 p2bullets = []
 
-
 # Bullet Values
 bulletsize = 5
-bulletspeed = 15
+bulletspeed = 10
 
 # Displaying Text
 font = pygame.font.Font('freesansbold.ttf', 32)
@@ -65,13 +65,18 @@ def move_bullet(speed, position, angle):
 
 
 while not game_over:
+    #Updates timers
+    if p1bulletcooldown > 0:
+        p1bulletcooldown -= 1/60
+    else:
+        p1bulletcooldown = 0
     # Closes Window if X is pressed
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             game_over = True
     keys = pygame.key.get_pressed()
 
-    #Joystick Movement
+#Joystick Movement
     joystick = [0, 0]
     if keys[pygame.K_w]:
         joystick[1] = -1
@@ -83,9 +88,7 @@ while not game_over:
         joystick[0] = 1
     #joystick.append(joystick_get_x())
     #joystick.append(joystick_get_y())
-    print(joystick)
 
-    #Keyboard Movement
     keycontrols = [0, 0]
     if keys[pygame.K_UP]:
         keycontrols[1] = -1
@@ -95,19 +98,17 @@ while not game_over:
         keycontrols[0] = -1
     elif keys[pygame.K_RIGHT]:
         keycontrols[0] = 1
-    # Player Positions
+
+#Move entities
     p1pos = move_player(p1speed, p1pos, joystick)
     p2pos = move_player(p2speed, p2pos, keycontrols)
-
-    if keys[pygame.K_SPACE]:
+    if keys[pygame.K_SPACE] and p1bulletcooldown == 0:
         bulletposition = [p1pos[0]+p1size[0]/2,p1pos[1] + p1size[1]/2]
         p1bullets.append([bulletposition,0.8])
-
-
-
+        p1bulletcooldown = 0.25
 
     # Visual output
-    dis.fill(yellow)
+    dis.fill(black)
     pygame.draw.rect(dis, red, [p1pos[0], p1pos[1], p1size[0], p1size[1]])
     pygame.draw.rect(dis, blue, [p2pos[0], p2pos[1], p2size[0], p2size[1]])
     for bullet in p1bullets:
