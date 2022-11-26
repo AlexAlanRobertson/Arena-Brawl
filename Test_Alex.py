@@ -34,6 +34,7 @@ p2size = [30, 50]
 p2speed = 4
 p2pos = [displaysize[0]/3, displaysize[1]/3]
 p2bullets = []
+p2bulletcooldown = 0
 
 # Bullet Values
 bulletsize = 5
@@ -70,6 +71,12 @@ while not game_over:
         p1bulletcooldown -= 1/60
     else:
         p1bulletcooldown = 0
+    if p2bulletcooldown > 0:
+        p2bulletcooldown -= 1/60
+    else:
+        p2bulletcooldown = 0
+
+
     # Closes Window if X is pressed
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -107,13 +114,24 @@ while not game_over:
         p1bullets.append([bulletposition,0.8])
         p1bulletcooldown = 0.25
 
+    if keys[pygame.K_RSHIFT] and p2bulletcooldown == 0:
+        bulletposition = [p2pos[0] + p2size[0]/2, p2pos[1] + p2size[1]/2]
+        p2bullets.append([bulletposition, 0.8])
+        p2bulletcooldown = 0.25
+
     # Visual output
     dis.fill(black)
     pygame.draw.rect(dis, red, [p1pos[0], p1pos[1], p1size[0], p1size[1]])
     pygame.draw.rect(dis, blue, [p2pos[0], p2pos[1], p2size[0], p2size[1]])
+
     for bullet in p1bullets:
         new_pos = move_bullet(bulletspeed,bullet[0],bullet[1])
         pygame.draw.circle(dis, white,new_pos, bulletsize )
+
+    for bullet in p2bullets:
+        new_pos = move_bullet(bulletspeed, bullet[0], bullet[1])
+        pygame.draw.circle(dis, white, new_pos, bulletsize)
+
 
     pygame.display.update()
     fps.tick(60)
