@@ -44,7 +44,9 @@ while not game_over:
             game_over = True
     keys = pygame.key.get_pressed()
 
-    joystick = analog_read(2)
+    joystick = []
+    joystick.append(joystick_get_x())
+    joystick.append(joystick_get_y())
     print(joystick)
     # Visual output
     dis.fill(black)
