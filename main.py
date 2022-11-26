@@ -9,6 +9,7 @@ dis = pygame.display.set_mode((800, 600))
 pygame.display.update()
 pygame.display.set_caption("Dodge")
 game_over = False
+fps = pygame.time.Clock()
 
 # colours
 blue = (0, 0, 255)
@@ -24,13 +25,13 @@ startup_screen = True
 
 # Player Values
 p1size = [30,50]
-p1speed = 10
+p1speed = 4
 p1pos = [displaysize[0]/2,displaysize[1]/2]
 p1bullets = []
 
 # Bullet Values
 bulletsize = 5
-bulletspeed = 30
+bulletspeed = 15
 
 # Displaying Text
 font = pygame.font.Font('freesansbold.ttf', 32)
@@ -58,7 +59,6 @@ def move_bullet(speed, position, angle):
 
 
 while not game_over:
-    sleep(0.1)
     # Closes Window if X is pressed
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -82,25 +82,20 @@ while not game_over:
     p1pos = move_player(p1speed, p1pos, joystick)
 
     if keys[pygame.K_SPACE]:
-        bulletposition = [p1pos[0]+p1size[0]/2,p1pos[1]/2]
-        p1bullets.append([bulletposition,0.1])
-
-
-
-
-
-
+        bulletposition = [p1pos[0]+p1size[0]/2,p1pos[1] + p1size[1]/2]
+        p1bullets.append([bulletposition,0.8])
 
 
 
 
     # Visual output
     dis.fill(black)
+    pygame.draw.rect(dis, red, [p1pos[0], p1pos[1], p1size[0], p1size[1]])
     for bullet in p1bullets:
         new_pos = move_bullet(bulletspeed,bullet[0],bullet[1])
         pygame.draw.circle(dis, white,new_pos, bulletsize )
-    pygame.draw.rect(dis, red, [p1pos[0], p1pos[1], p1size[0], p1size[1]])
-    pygame.display.update()
 
+    pygame.display.update()
+    fps.tick(60)
 pygame.quit()
 quit()
