@@ -29,12 +29,16 @@ p1speed = 4
 p1pos = [displaysize[0]/2,displaysize[1]/2]
 p1bullets = []
 p1bulletcooldown = 0
+p1lives = 5
+p1score = 0
 
 p2size = [30, 50]
 p2speed = 4
 p2pos = [displaysize[0]/3, displaysize[1]/3]
 p2bullets = []
+p2bulletcooldown = 0
 p2lives = 5
+p2score = 0
 
 # Bullet Values
 bulletsize = 5
@@ -63,8 +67,6 @@ def move_bullet(speed, position, angle):
     position [1] += speed * sin(angle)
     return position
 
-def checkifhit(bullet,player):
-    return pygame.Rect.colliderect(bullet,player)
 
 
 while not game_over:
@@ -73,6 +75,12 @@ while not game_over:
         p1bulletcooldown -= 1/60
     else:
         p1bulletcooldown = 0
+
+    if p2bulletcooldown > 0:
+        p2bulletcooldown -= 1/60
+    else:
+        p2bulletcooldown = 0
+
     # Closes Window if X is pressed
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -110,18 +118,53 @@ while not game_over:
         p1bullets.append([bulletposition,0.8])
         p1bulletcooldown = 0.25
 
+    if keys[pygame.K_RSHIFT] and p2bulletcooldown == 0:
+        bulletposition = [p2pos[0] + p2size[0]/2, p2pos[1] + p2size[1]/2]
+        p2bullets.append([bulletposition, 0.8])
+        p2bulletcooldown = 0.25
+
     # Visual output
     dis.fill(black)
     p1 = pygame.draw.rect(dis, red, [p1pos[0], p1pos[1], p1size[0], p1size[1]])
     p2 = pygame.draw.rect(dis, blue, [p2pos[0], p2pos[1], p2size[0], p2size[1]])
     for bullet in p1bullets:
-        new_pos = move_bullet(bulletspeed,bullet[0],bullet[1])
-        b = pygame.draw.circle(dis, white,new_pos, bulletsize)
-        if checkifhit(b,p2) == True:
+        new_pos = move_bullet(bulletspeed, bullet[0], bullet[1])
+        b = pygame.draw.circle(dis, white, new_pos, bulletsize)
+        if pygame.Rect.colliderect(b,p2):
             p2lives -= 1
             p1bullets.remove(bullet)
-    message("P2 Lives: " + str(p2lives),white, displaysize[0]/1.3,0)
+    for bullet in p2bullets:
+        new_pos = move_bullet(bulletspeed, bullet[0], bullet[1])
+        b = pygame.draw.circle(dis, white, new_pos, bulletsize)
+        if pygame.Rect.colliderect(b,p1):
+            p1lives -= 1
+            p2bullets.remove(bullet)
+    message("P1 Score: " + str(p1score), white, 0, 0)
+    message("P2 Score: " + str(p2score), white, displaysize[0] / 1.3, 0)
     pygame.display.update()
+
+    #Win conditions
+    if p1lives == 0:
+        sleep(1)
+        p2score += 1
+        p1lives = 5
+    elif p2lives == 0:
+        sleep(1)
+        p1score += 1
+        p2lives = 5
+
+    if p1score == 3:
+        dis.fill(black)
+        message("Player One Wins", red, displaysize[0]/3, displaysize[1]/2)
+        pygame.display.update()
+        sleep(3)
+        game_over = True
+    if p2score == 3:
+        dis.fill(black)
+        message("Player Two Wins", blue, displaysize[0]/3, displaysize[1]/2)
+        pygame.display.update()
+        sleep(3)
+        game_over = True
     fps.tick(60)
 pygame.quit()
 quit()

@@ -29,14 +29,16 @@ p1speed = 4
 p1pos = [displaysize[0]/2,displaysize[1]/2]
 p1bullets = []
 p1bulletcooldown = 0
-p1lives = 5
+p1lives = 3
+p1score = 0
 
 p2size = [30, 50]
 p2speed = 4
 p2pos = [displaysize[0]/3, displaysize[1]/3]
 p2bullets = []
 p2bulletcooldown = 0
-p2lives = 5
+p2lives = 3
+p2score = 0
 
 # Bullet Values
 bulletsize = 5
@@ -137,10 +139,32 @@ while not game_over:
         if pygame.Rect.colliderect(b,p1):
             p1lives -= 1
             p2bullets.remove(bullet)
-    message("P1 Lives: " + str(p1lives), white, 0, 0)
-    message("P2 Lives: " + str(p2lives), white, displaysize[0] / 1.3, 0)
-
+    message("P1 Score: " + str(p1score), white, 0, 0)
+    message("P2 Score: " + str(p2score), white, displaysize[0] / 1.3, 0)
     pygame.display.update()
+
+    #Win conditions
+    if p1lives == 0:
+        sleep(1)
+        p2score += 1
+        p1lives = 3
+    elif p2lives == 0:
+        sleep(1)
+        p1score += 1
+        p2lives = 3
+
+    if p1score == 5:
+        dis.fill(black)
+        message("Player One Wins", red, displaysize[0]/3, displaysize[1]/2)
+        pygame.display.update()
+        sleep(3)
+        game_over = True
+    if p2score == 5:
+        dis.fill(black)
+        message("Player Two Wins", blue, displaysize[0]/3, displaysize[1]/2)
+        pygame.display.update()
+        sleep(3)
+        game_over = True
     fps.tick(60)
 pygame.quit()
 quit()
