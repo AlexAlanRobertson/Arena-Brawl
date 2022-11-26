@@ -65,6 +65,7 @@ while not game_over:
             game_over = True
     keys = pygame.key.get_pressed()
 
+#Joystick Movement
     joystick = [0, 0]
     if keys[pygame.K_w]:
         joystick[1] = -1
@@ -74,27 +75,30 @@ while not game_over:
         joystick[0] = -1
     elif keys[pygame.K_d]:
         joystick[0] = 1
-
-    if keys[pygame.K_SPACE]:
-        bulletposition = p1pos
-        p1bullets.append([bulletposition,0.8])
-
-    for bullet in p1bullets:
-        new_pos = move_bullet(bulletspeed,bullet[0],bullet[1])
-        pygame.draw.circle(dis, white,new_pos, bulletsize )
-
-
-
-
-
-
     #joystick.append(joystick_get_x())
     #joystick.append(joystick_get_y())
     print(joystick)
 
     p1pos = move_player(p1speed, p1pos, joystick)
+
+    if keys[pygame.K_SPACE]:
+        bulletposition = [p1pos[0]+p1size[0]/2,p1pos[1]/2]
+        p1bullets.append([bulletposition,0.1])
+
+
+
+
+
+
+
+
+
+
     # Visual output
     dis.fill(black)
+    for bullet in p1bullets:
+        new_pos = move_bullet(bulletspeed,bullet[0],bullet[1])
+        pygame.draw.circle(dis, white,new_pos, bulletsize )
     pygame.draw.rect(dis, red, [p1pos[0], p1pos[1], p1size[0], p1size[1]])
     pygame.display.update()
 
