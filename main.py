@@ -34,6 +34,14 @@ def message (msg,colour,x,y):
 def move_player(speed, position, joystick):
     position[0] += joystick[0] * speed
     position[1] += joystick[1] * speed
+    if position[0] > displaysize[0] - p1size[0]:
+        position[0] = displaysize[0] - p1size[0]
+    if position[0] < 0:
+        position[0] = 0
+    if position[1] > displaysize[1] - p1size[1]:
+        position[1] = displaysize[1] - p1size[1]
+    if position[1] < 0:
+        position[1] = 0
     return position
 
 while not game_over:
@@ -44,7 +52,7 @@ while not game_over:
             game_over = True
     keys = pygame.key.get_pressed()
 
-    joystick = [0.5,-0.5]
+    joystick = [0.5,0.5]
     #joystick.append(joystick_get_x())
     #joystick.append(joystick_get_y())
     print(joystick)
