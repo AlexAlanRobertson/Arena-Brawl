@@ -26,6 +26,7 @@ p1size = [30,50]
 p1speed = 10
 p1pos = [displaysize[0]/2,displaysize[1]/2]
 
+
 # Displaying Text
 font = pygame.font.Font('freesansbold.ttf', 32)
 def message (msg,colour,x,y):
@@ -52,7 +53,15 @@ while not game_over:
             game_over = True
     keys = pygame.key.get_pressed()
 
-    joystick = [0.5,0.5]
+    joystick = [0, 0]
+    if keys[pygame.K_w]:
+        joystick[1] = -1
+    elif keys[pygame.K_s]:
+        joystick[1] = 1
+    if keys[pygame.K_a]:
+        joystick[0] = -1
+    elif keys[pygame.K_d]:
+        joystick[0] = 1
     #joystick.append(joystick_get_x())
     #joystick.append(joystick_get_y())
     print(joystick)
