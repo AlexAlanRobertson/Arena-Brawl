@@ -2,6 +2,7 @@ import pygame
 from engi1020.arduino.api import *
 from time import sleep
 import random
+from math import *
 
 pygame.init()
 dis = pygame.display.set_mode((800, 600))
@@ -25,11 +26,11 @@ startup_screen = True
 p1size = [30,50]
 p1speed = 10
 p1pos = [displaysize[0]/2,displaysize[1]/2]
+p1bullets = []
 
 # Bullet Values
 bulletsize = 5
 bulletspeed = 30
-bulletpos = [p1pos[0], p1pos[1]]
 
 # Displaying Text
 font = pygame.font.Font('freesansbold.ttf', 32)
@@ -49,20 +50,10 @@ def move_player(speed, position, joystick):
         position[1] = 0
     return position
 
-def move_bullets(speed, position, joystick):
-    position[0] += joystick[0] * speed
-    position [1] += joystick[1] * speed
-    if position[0] > displaysize[0]:
-        #delete bullet
-    if position[0] < 0:
-        #delete bullet
-    if position[1] > displaysize[1]
-
-
-
-
-
-
+def move_bullet(speed, position, angle):
+    position[0] += speed * cos(angle)
+    position [1] += speed * sin(angle)
+    return position
 
 
 
@@ -84,8 +75,11 @@ while not game_over:
     elif keys[pygame.K_d]:
         joystick[0] = 1
 
+    if #p1shoots:
+        p1bullets.append([p1pos,45])
 
-
+    for bullet in p1bullets:
+        move_bullet(speed,bullet[0],bullet[1])
 
 
 
