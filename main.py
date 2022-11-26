@@ -29,12 +29,14 @@ p1speed = 4
 p1pos = [displaysize[0]/2,displaysize[1]/2]
 p1bullets = []
 p1bulletcooldown = 0
+p1lives = 5
 
 p2size = [30, 50]
 p2speed = 4
 p2pos = [displaysize[0]/3, displaysize[1]/3]
 p2bullets = []
 p2bulletcooldown = 0
+p2lives = 5
 
 # Bullet Values
 bulletsize = 5
@@ -71,11 +73,11 @@ while not game_over:
         p1bulletcooldown -= 1/60
     else:
         p1bulletcooldown = 0
+
     if p2bulletcooldown > 0:
         p2bulletcooldown -= 1/60
     else:
         p2bulletcooldown = 0
-
 
     # Closes Window if X is pressed
     for event in pygame.event.get():
@@ -121,17 +123,22 @@ while not game_over:
 
     # Visual output
     dis.fill(black)
-    pygame.draw.rect(dis, red, [p1pos[0], p1pos[1], p1size[0], p1size[1]])
-    pygame.draw.rect(dis, blue, [p2pos[0], p2pos[1], p2size[0], p2size[1]])
-
+    p1 = pygame.draw.rect(dis, red, [p1pos[0], p1pos[1], p1size[0], p1size[1]])
+    p2 = pygame.draw.rect(dis, blue, [p2pos[0], p2pos[1], p2size[0], p2size[1]])
     for bullet in p1bullets:
-        new_pos = move_bullet(bulletspeed,bullet[0],bullet[1])
-        pygame.draw.circle(dis, white,new_pos, bulletsize )
-
+        new_pos = move_bullet(bulletspeed, bullet[0], bullet[1])
+        b = pygame.draw.circle(dis, white, new_pos, bulletsize)
+        if pygame.Rect.colliderect(b,p2):
+            p2lives -= 1
+            p1bullets.remove(bullet)
     for bullet in p2bullets:
         new_pos = move_bullet(bulletspeed, bullet[0], bullet[1])
-        pygame.draw.circle(dis, white, new_pos, bulletsize)
-
+        b = pygame.draw.circle(dis, white, new_pos, bulletsize)
+        if pygame.Rect.colliderect(b,p1):
+            p1lives -= 1
+            p2bullets.remove(bullet)
+    message("P1 Lives: " + str(p1lives), white, 0, 0)
+    message("P2 Lives: " + str(p2lives), white, displaysize[0] / 1.3, 0)
 
     pygame.display.update()
     fps.tick(60)
