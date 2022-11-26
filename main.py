@@ -30,6 +30,11 @@ p1pos = [displaysize[0]/2,displaysize[1]/2]
 p1bullets = []
 p1bulletcooldown = 0
 
+p2size = [30, 50]
+p2speed = 4
+p2pos = [displaysize[0]/3, displaysize[1]/3]
+p2bullets = []
+
 # Bullet Values
 bulletsize = 5
 bulletspeed = 10
@@ -96,6 +101,7 @@ while not game_over:
 
 #Move entities
     p1pos = move_player(p1speed, p1pos, joystick)
+    p2pos = move_player(p2speed, p2pos, keycontrols)
     if keys[pygame.K_SPACE] and p1bulletcooldown == 0:
         bulletposition = [p1pos[0]+p1size[0]/2,p1pos[1] + p1size[1]/2]
         p1bullets.append([bulletposition,0.8])
