@@ -49,9 +49,10 @@ font = pygame.font.Font('freesansbold.ttf', 32)
 def message (msg,colour,x,y):
     mesg = font.render(msg, True, colour)
     dis.blit(mesg, [x, y])
-def move_player(speed, position, joystick,player):
+def move_player(speed, position, joystick,player, size):
     position[0] += joystick[0] * speed
     position[1] += joystick[1] * speed
+    player = pygame.draw.rect(dis, red, [position[0], position[1], size[0], size[1]])
     for o in oblist:
         if pygame.Rect.colliderect(player,o):
             position[0] -= joystick[0] * speed
@@ -182,8 +183,8 @@ while not game_over:
         game_over = True
 
         # Move entities
-    p1pos = move_player(p1speed, p1pos, joystick, p1)
-    p2pos = move_player(p2speed, p2pos, keycontrols, p2)
+    p1pos = move_player(p1speed, p1pos, joystick, p1, p1size)
+    p2pos = move_player(p2speed, p2pos, keycontrols, p2,p2size)
     if keys[pygame.K_SPACE] and p1bulletcooldown == 0:
         bulletposition = [p1pos[0] + p1size[0] / 2, p1pos[1] + p1size[1] / 2]
         p1bullets.append([bulletposition, 0.8])
