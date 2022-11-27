@@ -51,12 +51,16 @@ def message (msg,colour,x,y):
     dis.blit(mesg, [x, y])
 def move_player(speed, position, joystick,player, size):
     position[0] += joystick[0] * speed
-    position[1] += joystick[1] * speed
     player = pygame.draw.rect(dis, red, [position[0], position[1], size[0], size[1]])
     for o in oblist:
         if pygame.Rect.colliderect(player,o):
             position[0] -= joystick[0] * speed
+    position[1] += joystick[1] * speed
+    player = pygame.draw.rect(dis, red, [position[0], position[1], size[0], size[1]])
+    for o in oblist:
+        if pygame.Rect.colliderect(player,o):
             position[1] -= joystick[1] * speed
+
     if position[0] > displaysize[0] - p1size[0]:
         position[0] = displaysize[0] - p1size[0]
     if position[0] < 0:
