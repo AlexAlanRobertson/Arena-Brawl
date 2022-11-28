@@ -134,7 +134,8 @@ while not game_over:
     o1 = pygame.draw.rect(dis, yellow, [displaysize[0] / 3, displaysize[1] / 3, 35, 35])
     o2 = pygame.draw.rect(dis, yellow, [displaysize[0] * 2 / 3, displaysize[1] / 3, 30, 30])
     o3 = pygame.draw.rect(dis, yellow, [displaysize[0] / 3, displaysize[1] * 2 / 3, 25, 25])
-    o4 = pygame.draw.rect(dis, yellow, [displaysize[0] * 2 / 3, displaysize[1] * 2 / 3, 40, 40])
+    o4 = pygame.draw.circle(dis, green, [displaysize[0] * 2 / 3, displaysize[1] * 2 / 3], 45,1)
+    o4sprite = pygame.transform.scale(tree,[182,130])
     o5 = pygame.draw. circle(dis, green, [displaysize[0] * 1 / 6, displaysize[1] * 1 / 6], 35, 1)
     o5sprite = pygame.transform.scale(tree,[145,105])
     o6 = pygame.draw.rect(dis, yellow, [displaysize[0] * 5 / 6, displaysize[1] * 5 / 6, 30, 30])
@@ -152,7 +153,8 @@ while not game_over:
 
     dis.blit(p1sprite, (p1.x-2,p1.y - 10))
     dis.blit(p2sprite, (p2.x+1, p2.y-5))
-    dis.blit(o5sprite, (displaysize[0] * 1 / 6 - 73, displaysize[1] * 1 / 6 - 54))
+    dis.blit(o5sprite, (o5.x-40, o5.y-20))
+    dis.blit(o4sprite, (o4.x-48, o4.y-24))
 
 
     for bullet in p1bullets:
@@ -163,7 +165,7 @@ while not game_over:
             p1bullets.remove(bullet)
         else:
             for obstacle in oblist:
-                if pygame.Rect.colliderect(b,obstacle):
+                if pygame.Rect.colliderect(obstacle,b):
                     p1bullets.remove(bullet)
     for bullet in p2bullets:
         new_pos = move_bullet(bulletspeed, bullet[0], bullet[1])
@@ -172,7 +174,7 @@ while not game_over:
             p1lives -= 1
             p2bullets.remove(bullet)
         for obstacle in oblist:
-            if pygame.Rect.colliderect(b,obstacle):
+            if pygame.Rect.colliderect(obstacle,b):
                 p2bullets.remove(bullet)
     message("P1 Score: " + str(p1score), white, 0, 0)
     message("P2 Score: " + str(p2score), white, displaysize[0] / 1.3, 0)
