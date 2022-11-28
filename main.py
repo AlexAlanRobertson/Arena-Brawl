@@ -22,7 +22,8 @@ yellow = (255,255,0)
 displaysize = [800,600]
 dis = pygame.display.set_mode((displaysize[0], displaysize[1]))
 startup_screen = True
-backround = pygame.image.load(os.path.join('venv', 'gamebg.png'))
+backgroundimage = pygame.image.load(os.path.join('venv', 'background3.png'))
+background = pygame.transform.scale(backgroundimage, displaysize)
 # Player Values
 p1size = 25
 p1speed = 4
@@ -69,12 +70,12 @@ def move_player(speed, position, joystick,player, size):
 
     if position[0] > displaysize[0] - size:
         position[0] = displaysize[0] - size
-    if position[0] < 0:
-        position[0] = 0
+    if position[0] < 0 + size:
+        position[0] = 0 + size
     if position[1] > displaysize[1] - size:
         position[1] = displaysize[1] - size
-    if position[1] < 0:
-        position[1] = 0
+    if position[1] < 0 + size:
+        position[1] = 0 + size
     return position
 
 def move_bullet(speed, position, angle):
@@ -127,7 +128,7 @@ while not game_over:
 
      # Visual output
     dis.fill(black)
-    dis.blit(backround, (0,0))
+    dis.blit(background, (0,0))
     o1 = pygame.draw.rect(dis, yellow, [displaysize[0] / 3, displaysize[1] / 3, 35, 35])
     o2 = pygame.draw.rect(dis, yellow, [displaysize[0] * 2 / 3, displaysize[1] / 3, 30, 30])
     o3 = pygame.draw.rect(dis, yellow, [displaysize[0] / 3, displaysize[1] * 2 / 3, 25, 25])
@@ -146,8 +147,8 @@ while not game_over:
     p1 = pygame.draw.circle(dis, black, p1pos, p1size,1)
     p2 = pygame.draw.circle(dis, black, p2pos, p2size,1)
 
-    dis.blit(p1sprite, (p1.x-4,p1.y - 10))
-    dis.blit(p2sprite, (p2.x, p2.y))
+    dis.blit(p1sprite, (p1.x-2,p1.y - 10))
+    dis.blit(p2sprite, (p2.x+1, p2.y-5))
 
 
     for bullet in p1bullets:

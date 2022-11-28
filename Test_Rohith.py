@@ -22,7 +22,8 @@ yellow = (255,255,0)
 displaysize = [800,600]
 dis = pygame.display.set_mode((displaysize[0], displaysize[1]))
 startup_screen = True
-backround = pygame.image.load(os.path.join('venv', 'gamebg.png'))
+backgroundimage = pygame.image.load(os.path.join('venv', 'background3.png'))
+background = pygame.transform.scale(backgroundimage, displaysize)
 # Player Values
 p1size = 25
 p1speed = 4
@@ -127,7 +128,7 @@ while not game_over:
 
      # Visual output
     dis.fill(black)
-    dis.blit(backround, (0,0))
+    dis.blit(background, (0,0))
     o1 = pygame.draw.rect(dis, yellow, [displaysize[0] / 3, displaysize[1] / 3, 35, 35])
     o2 = pygame.draw.rect(dis, yellow, [displaysize[0] * 2 / 3, displaysize[1] / 3, 30, 30])
     o3 = pygame.draw.rect(dis, yellow, [displaysize[0] / 3, displaysize[1] * 2 / 3, 25, 25])
