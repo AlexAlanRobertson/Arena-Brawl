@@ -215,7 +215,6 @@ while not game_over:
         bulletposition = [p2pos[0], p2pos[1]]
         p2bullets.append([bulletposition, 0.8])
         p2bulletcooldown = 0.25
-
     fps.tick(60)
 pygame.quit()
 quit()
