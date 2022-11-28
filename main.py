@@ -17,6 +17,7 @@ white = (255, 255, 255)
 red = (255, 0, 0)
 black = (0, 0, 0)
 yellow = (255,255,0)
+green = (34,139,34)
 
 # display
 displaysize = [800,600]
@@ -47,6 +48,7 @@ p2score = 0
 p2image = pygame.image.load(os.path.join('venv', 'p2image.gif'))
 p2sprite = pygame.transform.scale(p2image, [2*p2size, 2*p2size])
 
+tree = pygame.image.load(os.path.join('venv', 'tree1.png'))
 # Bullet Values
 bulletsize = 5
 bulletspeed = 10
@@ -133,7 +135,8 @@ while not game_over:
     o2 = pygame.draw.rect(dis, yellow, [displaysize[0] * 2 / 3, displaysize[1] / 3, 30, 30])
     o3 = pygame.draw.rect(dis, yellow, [displaysize[0] / 3, displaysize[1] * 2 / 3, 25, 25])
     o4 = pygame.draw.rect(dis, yellow, [displaysize[0] * 2 / 3, displaysize[1] * 2 / 3, 40, 40])
-    o5 = pygame.draw.rect(dis, yellow, [displaysize[0] * 1 / 6, displaysize[1] * 1 / 6, 35, 35])
+    o5 = pygame.draw. circle(dis, green, [displaysize[0] * 1 / 6, displaysize[1] * 1 / 6], 35, 1)
+    o5sprite = pygame.transform.scale(tree,[145,105])
     o6 = pygame.draw.rect(dis, yellow, [displaysize[0] * 5 / 6, displaysize[1] * 5 / 6, 30, 30])
     o7 = pygame.draw.rect(dis, yellow, [displaysize[0] * 1 / 6, displaysize[1] * 5 / 6, 25, 25])
     o8 = pygame.draw.rect(dis, yellow, [displaysize[0] * 5 / 6, displaysize[1] * 1 / 6, 20, 20])
@@ -149,6 +152,7 @@ while not game_over:
 
     dis.blit(p1sprite, (p1.x-2,p1.y - 10))
     dis.blit(p2sprite, (p2.x+1, p2.y-5))
+    dis.blit(o5sprite, (displaysize[0] * 1 / 6 - 73, displaysize[1] * 1 / 6 - 54))
 
 
     for bullet in p1bullets:
