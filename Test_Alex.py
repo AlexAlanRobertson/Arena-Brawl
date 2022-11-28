@@ -24,7 +24,7 @@ dis = pygame.display.set_mode((displaysize[0], displaysize[1]))
 startup_screen = True
 backround = pygame.image.load(os.path.join('venv', 'gamebg.png'))
 # Player Values
-p1size = [50,50]
+p1size = 25
 p1speed = 4
 p1pos = [displaysize[0]/2,displaysize[1]/2]
 p1bullets = []
@@ -36,7 +36,7 @@ p1sprite = pygame.transform.scale(p1image, p1size)
 
 
 
-p2size = [50, 50]
+p2size = 25
 p2speed = 4
 p2pos = [0, displaysize[1]/3]
 p2bullets = []
@@ -57,7 +57,7 @@ def message (msg,colour,x,y):
     dis.blit(mesg, [x, y])
 def move_player(speed, position, joystick,player, size):
     position[0] += joystick[0] * speed
-    player = pygame.draw.rect(dis, red, [position[0], position[1], size[0], size[1]])
+    player = pygame.draw.circle(dis, red, position, size)
     for o in oblist:
         if pygame.Rect.colliderect(player,o):
             position[0] -= joystick[0] * speed
@@ -67,8 +67,8 @@ def move_player(speed, position, joystick,player, size):
         if pygame.Rect.colliderect(player,o):
             position[1] -= joystick[1] * speed
 
-    if position[0] > displaysize[0] - p1size[0]:
-        position[0] = displaysize[0] - p1size[0]
+    if position[0] > displaysize[0] - size:
+        position[0] = displaysize[0] - size
     if position[0] < 0:
         position[0] = 0
     if position[1] > displaysize[1] - p1size[1]:
