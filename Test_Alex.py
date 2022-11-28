@@ -22,9 +22,9 @@ yellow = (255,255,0)
 displaysize = [800,600]
 dis = pygame.display.set_mode((displaysize[0], displaysize[1]))
 startup_screen = True
-
+backround = pygame.image.load(os.path.join('venv', 'gamebg.png'))
 # Player Values
-p1size = [30,50]
+p1size = [50,50]
 p1speed = 4
 p1pos = [displaysize[0]/2,displaysize[1]/2]
 p1bullets = []
@@ -32,15 +32,19 @@ p1bulletcooldown = 0
 p1lives = 3
 p1score = 0
 p1image = pygame.image.load(os.path.join('venv', 'p1Sprite.png'))
-p1sprite = pygame.transform.scale(p1image, (p1size[1] * 46/29, p1size[1]))
+p1sprite = pygame.transform.scale(p1image, p1size)
 
-p2size = [30, 50]
+
+
+p2size = [50, 50]
 p2speed = 4
 p2pos = [0, displaysize[1]/3]
 p2bullets = []
 p2bulletcooldown = 0
 p2lives = 3
 p2score = 0
+p2image = pygame.image.load(os.path.join('venv', 'p2image.gif'))
+p2sprite = pygame.transform.scale(p2image, p2size)
 
 # Bullet Values
 bulletsize = 5
@@ -121,10 +125,9 @@ while not game_over:
     elif keys[pygame.K_RIGHT]:
         keycontrols[0] = 1
 
-
-
-    # Visual output
+     # Visual output
     dis.fill(black)
+    dis.blit(backround, (0,0))
     o1 = pygame.draw.rect(dis, yellow, [displaysize[0] / 3, displaysize[1] / 3, 35, 35])
     o2 = pygame.draw.rect(dis, yellow, [displaysize[0] * 2 / 3, displaysize[1] / 3, 30, 30])
     o3 = pygame.draw.rect(dis, yellow, [displaysize[0] / 3, displaysize[1] * 2 / 3, 25, 25])
@@ -140,9 +143,12 @@ while not game_over:
     o13 = pygame.draw.rect(dis, yellow, [displaysize[0] * 1 / 2, displaysize[1] * 6 / 10, 35, 35])
     oblist = [o1, o2, o3, o4, o5, o6, o7, o8, o9, o10, o11, o12, o13]
 
-    p1 = pygame.draw.rect(dis, black, [p1pos[0], p1pos[1], p1size[0], p1size[1]])
-    p2 = pygame.draw.rect(dis, blue, [p2pos[0], p2pos[1], p2size[0], p2size[1]])
+    p1 = pygame.draw.rect(dis, black, [p1pos[0], p1pos[1], p1size[0], p1size[1]], 1)
+    p2 = pygame.draw.rect(dis, black, [p2pos[0], p2pos[1], p2size[0], p2size[1]])
+
     dis.blit(p1sprite, (p1.x,p1.y))
+    dis.blit(p2sprite, (p2.x, p2.y))
+
 
     for bullet in p1bullets:
         new_pos = move_bullet(bulletspeed, bullet[0], bullet[1])
