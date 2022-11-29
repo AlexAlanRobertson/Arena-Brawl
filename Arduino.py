@@ -72,17 +72,17 @@ o7 = pygame.draw.circle(dis, green, [displaysize[0] * 1 / 6, displaysize[1] * 5 
 o7sprite = pygame.transform.scale(barrel, [60, 60])
 o8 = pygame.draw.circle(dis, green, [displaysize[0] * 5 / 6, displaysize[1] * 1 / 6], 25, 1)
 o8sprite = pygame.transform.scale(barrel, [60, 60])
-o9 = pygame.draw.circle(dis, green, [displaysize[0] * 1 / 6, displaysize[1] * 1 / 2], 30, 1)
-o9sprite = pygame.transform.scale(barrel, [60, 60])
+#o9 = pygame.draw.circle(dis, green, [displaysize[0] * 1 / 6, displaysize[1] * 1 / 2], 30, 1)
+#o9sprite = pygame.transform.scale(barrel, [60, 60])
 o10 = pygame.draw.circle(dis, green, [displaysize[0] * 1 / 2, displaysize[1] * 1 / 6], 40, 1)
 o10sprite = pygame.transform.scale(tree, [190, 140])
-o11 = pygame.draw.circle(dis, green, [displaysize[0] * 1 / 2, displaysize[1] * 5 / 6], 25, 1)
-o11sprite = pygame.transform.scale(barrel, [60, 60])
+#o11 = pygame.draw.circle(dis, green, [displaysize[0] * 1 / 2, displaysize[1] * 5 / 6], 25, 1)
+#o11sprite = pygame.transform.scale(barrel, [60, 60])
 o12 = pygame.draw.circle(dis, green, [displaysize[0] * 5 / 6, displaysize[1] * 1 / 2], 25, 1)
 o12sprite = pygame.transform.scale(barrel, [60, 60])
-o13 = pygame.draw.circle(dis, green, [displaysize[0] * 1 / 2, displaysize[1] * 6 / 10], 25, 1)
-o13sprite = pygame.transform.scale(barrel, [60, 60])
-oblist = [o1, o2, o3, o4, o5, o6, o7, o8, o9, o10, o11, o12, o13]
+#o13 = pygame.draw.circle(dis, green, [displaysize[0] * 1 / 2, displaysize[1] * 6 / 10], 25, 1)
+#o13sprite = pygame.transform.scale(barrel, [60, 60])
+oblist = [o1, o2, o3, o4, o5, o6, o7, o8, o10, o12]
 
 # Displaying Text
 font = pygame.font.Font('freesansbold.ttf', 32)
@@ -150,15 +150,15 @@ while startup_screen == True and game_over == False:
     buttonpressed = digital_read(6)
     if buttonpressed == True:
         startup_screen = False
-        buzzer_frequency(5, 60)
-        sleep(1)
+        buzzer_frequency(5, 10)
+        sleep(0.6)
         buzzer_stop(5)
-        sleep(1)
-        buzzer_frequency(5, 60)
-        sleep(1)
+        sleep(0.5)
+        buzzer_frequency(5, 10)
+        sleep(0.6)
         buzzer_stop(5)
-        sleep(1)
-        buzzer_frequency(5, 60)
+        sleep(0.5)
+        buzzer_frequency(5, 120)
         sleep(1)
         buzzer_stop(5)
 
@@ -210,13 +210,13 @@ while not game_over:
     #joystick.append(joystick_get_y())
 
     keycontrols = [0, 0]
-    if keys[pygame.K_UP]:
+    if keys[pygame.K_o]:
         keycontrols[1] = -1
-    elif keys[pygame.K_DOWN]:
+    elif keys[pygame.K_l]:
         keycontrols[1] = 1
-    if keys[pygame.K_LEFT]:
+    if keys[pygame.K_k]:
         keycontrols[0] = -1
-    elif keys[pygame.K_RIGHT]:
+    elif keys[pygame.K_SEMICOLON]:
         keycontrols[0] = 1
 
      # Visual output
@@ -250,10 +250,10 @@ while not game_over:
     dis.blit(o2sprite, [o2.x - 3, o2.y - 5])
     dis.blit(o1sprite, (o1.x - 3, o1.y - 5))
     dis.blit(o8sprite, (o8.x - 3, o8.y - 5))
-    dis.blit(o9sprite, [o9.x, o9.y])
-    dis.blit(o11sprite, [o11.x - 3, o11.y - 5])
+    #dis.blit(o9sprite, [o9.x, o9.y])
+    #dis.blit(o11sprite, [o11.x - 3, o11.y - 5])
     dis.blit(o12sprite, [o12.x - 3, o12.y - 5])
-    dis.blit(o13sprite, [o13.x - 3, o13.y - 5])
+    #dis.blit(o13sprite, [o13.x - 3, o13.y - 5])
     dis.blit(o5sprite, (o5.x-40, o5.y-20))
     dis.blit(o4sprite, (o4.x-48, o4.y-24))
 
@@ -327,7 +327,7 @@ while not game_over:
         p1bullets.append([bulletposition, p1bulletangle])
         p1bulletcooldown = 0.25
 
-    if keys[pygame.K_RSHIFT] and p2bulletcooldown == 0:
+    if keys[pygame.K_RCTRL] and p2bulletcooldown == 0:
         bulletposition = [p2pos[0], p2pos[1]]
         p2bullets.append([bulletposition, p2bulletangle])
         p2bulletcooldown = 0.25
