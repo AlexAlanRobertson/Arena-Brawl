@@ -137,7 +137,7 @@ def getangle(joystick,angle):
 
     return angle
 
-startup_screen = False
+startup_screen = True
 buttonpressed = False
 message_displayed = True
 
@@ -147,7 +147,7 @@ while startup_screen == True and game_over == False:
         if event.type == pygame.QUIT:
             game_over = True
 
-    buttonpressed = False
+    buttonpressed = digital_read(6)
     if buttonpressed == True:
         startup_screen = False
 
