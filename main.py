@@ -109,6 +109,32 @@ def getangle(joystick,angle):
 
     return angle
 
+startup_screen = True
+buttonpressed = False
+message_displayed = True
+
+
+while startup_screen == True and game_over == False:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            game_over = True
+
+    buttonpressed = False
+    if buttonpressed == True:
+        startup_screen = False
+
+    dis.fill(black)
+    if message_displayed == True:
+        message("Hold the Button to Start the Game", white, 140, displaysize[1]/2)
+        pygame.display.update()
+        sleep(0.8)
+        message_displayed = False
+    else:
+        pygame.display.update()
+        sleep(0.8)
+        message_displayed = True
+
+
 while not game_over:
     #Updates timers
     if p1bulletcooldown > 0:

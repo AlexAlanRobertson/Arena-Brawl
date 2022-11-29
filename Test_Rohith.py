@@ -18,45 +18,43 @@ red = (255, 0, 0)
 black = (0, 0, 0)
 yellow = (255,255,0)
 green = (34,139,34)
+sand = (194,178,128)
 
 # display
 displaysize = [800,600]
 dis = pygame.display.set_mode((displaysize[0], displaysize[1]))
-startup_screen = True
+
 backgroundimage = pygame.image.load(os.path.join('venv', 'background3.png'))
 background = pygame.transform.scale(backgroundimage, displaysize)
 # Player Values
 p1size = 25
 p1speed = 4
-p1rotation = 0
+p1rotation = 180
 p1pos = [displaysize[0]/2,displaysize[1]/2]
 p1bullets = []
 p1bulletcooldown = 0
-p1angle = 0
+p1bulletangle = pi
 p1lives = 3
 p1score = 0
 p1image = pygame.image.load(os.path.join('venv', 'p1Sprite.png'))
-p1sprite = pygame.transform.scale(p1image, [2.5 *p1size, 2.5 *p1size])
 
 
 
 p2size = 25
 p2speed = 4
 p2rotation = 0
-p2pos = [0, displaysize[1]/3]
+p2pos = [45, displaysize[1]/3]
 p2bullets = []
 p2bulletcooldown = 0
-p2angle = 0
+p2bulletangle = 0
 p2lives = 3
 p2score = 0
 p2image = pygame.image.load(os.path.join('venv', 'p2image.gif'))
-p2sprite = pygame.transform.scale(p2image, [2*p2size, 2*p2size])
 
 tree = pygame.image.load(os.path.join('venv', 'tree1.png'))
 # Bullet Values
 bulletsize = 5
 bulletspeed = 10
-
 
 # Displaying Text
 font = pygame.font.Font('freesansbold.ttf', 32)
@@ -112,6 +110,34 @@ def getangle(joystick,angle):
     return angle
 
 
+
+startup_screen = True
+buttonpressed = False
+message_displayed = True
+
+
+while startup_screen == True and game_over == False:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            game_over = True
+
+    buttonpressed = False
+    if buttonpressed == True:
+        startup_screen = False
+
+    dis.fill(black)
+    if message_displayed == True:
+        message("Hold the Button to Start the Game", white, 140, displaysize[1]/2)
+        pygame.display.update()
+        sleep(0.8)
+        message_displayed = False
+    else:
+        pygame.display.update()
+        sleep(0.8)
+        message_displayed = True
+
+
+
 while not game_over:
     #Updates timers
     if p1bulletcooldown > 0:
@@ -141,11 +167,11 @@ while not game_over:
             joystick[0] = -1
         elif keys[pygame.K_d]:
             joystick[0] = 1
-
-        #joystick[0] = (joystick_get_x())
-        #joystick[1] = (joystick_get_y())
-    else:
         everyother = False
+    else:
+        everyother = True
+    #joystick.append(joystick_get_x())
+    #joystick.append(joystick_get_y())
 
     keycontrols = [0, 0]
     if keys[pygame.K_UP]:
@@ -177,26 +203,28 @@ while not game_over:
     o13 = pygame.draw.rect(dis, yellow, [displaysize[0] * 1 / 2, displaysize[1] * 6 / 10, 35, 35])
     oblist = [o1, o2, o3, o4, o5, o6, o7, o8, o9, o10, o11, o12, o13]
 
-    p1 = pygame.draw.circle(dis, black, p1pos, p1size,1)
-    p1rotation = (getangle(joystick,p1rotation/57.2958) * 57.2958)
-    p1sprite = pygame.transform.scale(p1image, [2.5 * p1size, 2.5 * p1size])
-    p1sprite = pygame.transform.rotate(p1sprite,360 - p1rotation)
+    p1 = pygame.draw.circle(dis, black, p1pos, p1size, 1)
+    p1rotation = (getangle(joystick, p1rotation / 57.2958) * 57.2958)
+    p1sprite = pygame.transform.scale(p1image, [4 * p1size, 4 * p1size])
+    p1sprite = pygame.transform.rotate(p1sprite, 360 - p1rotation)
 
-    p2 = pygame.draw.circle(dis, black, p2pos, p2size,1)
+    p2 = pygame.draw.circle(dis, sand, p2pos, p2size, 1)
     p2rotation = (getangle(keycontrols, p2rotation / 57.2958) * 57.2958)
-    p2sprite = pygame.transform.scale(p2image, [2*p2size, 2*p2size])
+    p2sprite = pygame.transform.scale(p2image, [3 * p2size, 3 * p2size])
     p2sprite = pygame.transform.rotate(p2sprite, 360 - p2rotation)
 
-    dis.blit(p1sprite, (p1.x-2,p1.y - 10))
-    dis.blit(p2sprite, (p2.x+1, p2.y-5))
+    dis.blit(p1sprite, (p1.x-p1size,p1.y-p1size))
+    dis.blit(p2sprite, (p2.x-p2size/2, p2.y-p2size/2))
     dis.blit(o5sprite, (o5.x-40, o5.y-20))
     dis.blit(o4sprite, (o4.x-48, o4.y-24))
+
+
 
 
     for bullet in p1bullets:
         new_pos = move_bullet(bulletspeed, bullet[0], bullet[1])
         b = pygame.draw.circle(dis, white, new_pos, bulletsize)
-        if pygame.Rect.contains(p2,b):
+        if pygame.Rect.colliderect(p2,b):
             p2lives -= 1
             p1bullets.remove(bullet)
         else:
@@ -206,12 +234,13 @@ while not game_over:
     for bullet in p2bullets:
         new_pos = move_bullet(bulletspeed, bullet[0], bullet[1])
         b = pygame.draw.circle(dis, white, new_pos, bulletsize)
-        if pygame.Rect.contains(p1,b):
+        if pygame.Rect.colliderect(p1,b):
             p1lives -= 1
             p2bullets.remove(bullet)
-        for obstacle in oblist:
-            if pygame.Rect.colliderect(obstacle,b):
-                p2bullets.remove(bullet)
+        else:
+            for obstacle in oblist:
+                if pygame.Rect.colliderect(obstacle,b):
+                    p2bullets.remove(bullet)
     message("P1 Score: " + str(p1score), white, 0, 0)
     message("P2 Score: " + str(p2score), white, displaysize[0] / 1.3, 0)
     pygame.display.update()
@@ -243,20 +272,18 @@ while not game_over:
     p1pos = move_player(p1speed, p1pos, joystick, p1, p1size)
     p2pos = move_player(p2speed, p2pos, keycontrols, p2,p2size)
 
-    #Bullets
-    p1angle = getangle(joystick,p1angle)
-    p2angle = getangle(keycontrols,p2angle)
-
+    #bullets
+    p1bulletangle = getangle(joystick, p1bulletangle)
+    p2bulletangle = getangle(keycontrols, p2bulletangle)
     if keys[pygame.K_SPACE] and p1bulletcooldown == 0:
         bulletposition = [p1pos[0], p1pos[1]]
-        p1bullets.append([bulletposition, p1angle])
+        p1bullets.append([bulletposition, p1bulletangle])
         p1bulletcooldown = 0.25
 
     if keys[pygame.K_RSHIFT] and p2bulletcooldown == 0:
         bulletposition = [p2pos[0], p2pos[1]]
-        p2bullets.append([bulletposition, p2angle])
+        p2bullets.append([bulletposition, p2bulletangle])
         p2bulletcooldown = 0.25
-
     fps.tick(60)
 pygame.quit()
 quit()
