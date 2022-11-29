@@ -31,6 +31,7 @@ p1speed = 4
 p1pos = [displaysize[0]/2,displaysize[1]/2]
 p1bullets = []
 p1bulletcooldown = 0
+p1bulletangle = 180
 p1lives = 3
 p1score = 0
 p1image = pygame.image.load(os.path.join('venv', 'p1Sprite.png'))
@@ -43,6 +44,7 @@ p2speed = 4
 p2pos = [0, displaysize[1]/3]
 p2bullets = []
 p2bulletcooldown = 0
+p2bulletangle = 0
 p2lives = 3
 p2score = 0
 p2image = pygame.image.load(os.path.join('venv', 'p2image.gif'))
@@ -226,16 +228,16 @@ while not game_over:
     p2pos = move_player(p2speed, p2pos, keycontrols, p2,p2size)
 
     #bullets
-    p1angle = getangle(joystick, p1angle)
-    p2angle = getangle(keycontrols, p2angle)
+    p1bulletangle = getangle(joystick, p1bulletangle)
+    p2bulletangle = getangle(keycontrols, p2bulletangle)
     if keys[pygame.K_SPACE] and p1bulletcooldown == 0:
         bulletposition = [p1pos[0], p1pos[1]]
-        p1bullets.append([bulletposition, 0.8])
+        p1bullets.append([bulletposition, p1bulletangle])
         p1bulletcooldown = 0.25
 
     if keys[pygame.K_RSHIFT] and p2bulletcooldown == 0:
         bulletposition = [p2pos[0], p2pos[1]]
-        p2bullets.append([bulletposition, 0.8])
+        p2bullets.append([bulletposition, p2bulletangle])
         p2bulletcooldown = 0.25
     fps.tick(60)
 pygame.quit()
