@@ -85,7 +85,25 @@ def move_bullet(speed, position, angle):
     position [1] += speed * sin(angle)
     return position
 
+def getangle(joystick,angle):
+    if joystick == [0,0]:
+        return angle
+    elif joystick[0] == 0:
+        if joystick[1] < 0:
+            angle = pi*1.5
+        elif joystick[1] > 0:
+            angle = pi/2
+    elif joystick[1] == 0:
+        if joystick[0] > 0:
+            angle = 0
+        elif joystick[0] < 0:
+            angle = pi
+    elif joystick[0] > 0:
+        angle = atan(joystick[0]/joystick[1])
+    elif joystick[0] < 0:
+        angle = pi + (atan(joystick[0] / joystick[1]))
 
+    return angle
 
 while not game_over:
     #Updates timers
@@ -206,6 +224,10 @@ while not game_over:
         # Move entities
     p1pos = move_player(p1speed, p1pos, joystick, p1, p1size)
     p2pos = move_player(p2speed, p2pos, keycontrols, p2,p2size)
+
+    #bullets
+    p1angle = getangle(joystick, p1angle)
+    p2angle = getangle(keycontrols, p2angle)
     if keys[pygame.K_SPACE] and p1bulletcooldown == 0:
         bulletposition = [p1pos[0], p1pos[1]]
         p1bullets.append([bulletposition, 0.8])
