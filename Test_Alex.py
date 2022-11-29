@@ -17,12 +17,14 @@ white = (255, 255, 255)
 red = (255, 0, 0)
 black = (0, 0, 0)
 yellow = (255,255,0)
+green = (34,139,34)
 
 # display
 displaysize = [800,600]
 dis = pygame.display.set_mode((displaysize[0], displaysize[1]))
 startup_screen = True
-backround = pygame.image.load(os.path.join('venv', 'gamebg.png'))
+backgroundimage = pygame.image.load(os.path.join('venv', 'background3.png'))
+background = pygame.transform.scale(backgroundimage, displaysize)
 # Player Values
 p1size = 25
 p1speed = 4
@@ -32,7 +34,7 @@ p1bulletcooldown = 0
 p1lives = 3
 p1score = 0
 p1image = pygame.image.load(os.path.join('venv', 'p1Sprite.png'))
-p1sprite = pygame.transform.scale(p1image, p1size)
+p1sprite = pygame.transform.scale(p1image, [2.5 *p1size, 2.5 *p1size])
 
 
 
@@ -44,8 +46,10 @@ p2bulletcooldown = 0
 p2lives = 3
 p2score = 0
 p2image = pygame.image.load(os.path.join('venv', 'p2image.gif'))
-p2sprite = pygame.transform.scale(p2image, p2size)
+p2sprite = pygame.transform.scale(p2image, [2*p2size, 2*p2size])
 
+tree = pygame.image.load(os.path.join('venv', 'tree1.png'))
+barrel = pygame.image.load(os.path.join('venv', 'barrel.png'))
 # Bullet Values
 bulletsize = 5
 bulletspeed = 10
@@ -62,19 +66,19 @@ def move_player(speed, position, joystick,player, size):
         if pygame.Rect.colliderect(player,o):
             position[0] -= joystick[0] * speed
     position[1] += joystick[1] * speed
-    player = pygame.draw.rect(dis, red, [position[0], position[1], size[0], size[1]])
+    player = pygame.draw.circle(dis, red, position, size)
     for o in oblist:
         if pygame.Rect.colliderect(player,o):
             position[1] -= joystick[1] * speed
 
     if position[0] > displaysize[0] - size:
         position[0] = displaysize[0] - size
-    if position[0] < 0:
-        position[0] = 0
-    if position[1] > displaysize[1] - p1size[1]:
-        position[1] = displaysize[1] - p1size[1]
-    if position[1] < 0:
-        position[1] = 0
+    if position[0] < 0 + size:
+        position[0] = 0 + size
+    if position[1] > displaysize[1] - size:
+        position[1] = displaysize[1] - size
+    if position[1] < 0 + size:
+        position[1] = 0 + size
     return position
 
 def move_bullet(speed, position, angle):
@@ -127,47 +131,67 @@ while not game_over:
 
      # Visual output
     dis.fill(black)
-    dis.blit(backround, (0,0))
-    o1 = pygame.draw.rect(dis, yellow, [displaysize[0] / 3, displaysize[1] / 3, 35, 35])
-    o2 = pygame.draw.rect(dis, yellow, [displaysize[0] * 2 / 3, displaysize[1] / 3, 30, 30])
-    o3 = pygame.draw.rect(dis, yellow, [displaysize[0] / 3, displaysize[1] * 2 / 3, 25, 25])
-    o4 = pygame.draw.rect(dis, yellow, [displaysize[0] * 2 / 3, displaysize[1] * 2 / 3, 40, 40])
-    o5 = pygame.draw.rect(dis, yellow, [displaysize[0] * 1 / 6, displaysize[1] * 1 / 6, 35, 35])
-    o6 = pygame.draw.rect(dis, yellow, [displaysize[0] * 5 / 6, displaysize[1] * 5 / 6, 30, 30])
-    o7 = pygame.draw.rect(dis, yellow, [displaysize[0] * 1 / 6, displaysize[1] * 5 / 6, 25, 25])
-    o8 = pygame.draw.rect(dis, yellow, [displaysize[0] * 5 / 6, displaysize[1] * 1 / 6, 20, 20])
-    o9 = pygame.draw.rect(dis, yellow, [displaysize[0] * 1 / 6, displaysize[1] * 1 / 2, 20, 20])
-    o10 = pygame.draw.rect(dis, yellow, [displaysize[0] * 1 / 2, displaysize[1] * 1 / 6, 40, 40])
-    o11 = pygame.draw.rect(dis, yellow, [displaysize[0] * 1 / 2, displaysize[1] * 5 / 6, 30, 30])
-    o12 = pygame.draw.rect(dis, yellow, [displaysize[0] * 5 / 6, displaysize[1] * 1 / 2, 25, 25])
-    o13 = pygame.draw.rect(dis, yellow, [displaysize[0] * 1 / 2, displaysize[1] * 6 / 10, 35, 35])
+    dis.blit(background, (0,0))
+    o1 = pygame.draw.circle(dis, green, [displaysize[0] / 3, displaysize[1] / 3], 20, 1)
+
+    o2 = pygame.draw.circle(dis, green, [displaysize[0] * 2 / 3, displaysize[1] / 3], 30 ,1)
+
+    o3 = pygame.draw.circle(dis, green, [displaysize[0] / 3, displaysize[1] * 2 / 3], 45, 1)
+    o3sprite = pygame.transform.scale(tree, [200, 150])
+    o4 = pygame.draw.circle(dis, green, [displaysize[0] * 2 / 3, displaysize[1] * 2 / 3], 45,1)
+    o4sprite = pygame.transform.scale(tree,[182,130])
+    o5 = pygame.draw.circle(dis, green, [displaysize[0] * 1 / 6, displaysize[1] * 1 / 6], 35, 1)
+    o5sprite = pygame.transform.scale(tree,[145,105])
+    o6 = pygame.draw.circle(dis, green, [displaysize[0] * 5 / 6, displaysize[1] * 5 / 6], 30, 1)
+    o6sprite = pygame.transform.scale(tree, [155, 115])
+    o7 = pygame.draw.circle(dis, green, [displaysize[0] * 1 / 6, displaysize[1] * 5 / 6], 20, 1)
+
+    o8 = pygame.draw.circle(dis, green, [displaysize[0] * 5 / 6, displaysize[1] * 1 / 6], 25, 1)
+
+    o9 = pygame.draw.circle(dis, green, [displaysize[0] * 1 / 6, displaysize[1] * 1 / 2], 30, 1)
+
+    o10 = pygame.draw.circle(dis, green, [displaysize[0] * 1 / 2, displaysize[1] * 1 / 6], 40, 1)
+    o10sprite = pygame.transform.scale(tree, [190, 140])
+    o11 = pygame.draw.circle(dis, green, [displaysize[0] * 1 / 2, displaysize[1] * 5 / 6], 25, 1)
+
+    o12 = pygame.draw.circle(dis, green, [displaysize[0] * 5 / 6, displaysize[1] * 1 / 2], 30, 1)
+
+    o13 = pygame.draw.circle(dis, green, [displaysize[0] * 1 / 2, displaysize[1] * 6 / 10], 30, 1)
+
     oblist = [o1, o2, o3, o4, o5, o6, o7, o8, o9, o10, o11, o12, o13]
 
-    p1 = pygame.draw.rect(dis, black, [p1pos[0], p1pos[1], p1size[0], p1size[1]], 1)
-    p2 = pygame.draw.rect(dis, black, [p2pos[0], p2pos[1], p2size[0], p2size[1]])
+    p1 = pygame.draw.circle(dis, black, p1pos, p1size,1)
+    p2 = pygame.draw.circle(dis, black, p2pos, p2size,1)
 
-    dis.blit(p1sprite, (p1.x,p1.y))
-    dis.blit(p2sprite, (p2.x, p2.y))
+    dis.blit(p1sprite, (p1.x-2,p1.y - 10))
+    dis.blit(p2sprite, (p2.x+1, p2.y-5))
+    dis.blit(o5sprite, (o5.x-40, o5.y-20))
+    dis.blit(o4sprite, (o4.x-48, o4.y-24))
+    dis.blit(o3sprite, [o3.x - 55, o3.y - 35])
+    dis.blit(o10sprite, [o10.x - 55, o10.y - 35])
+    dis.blit(o6sprite, [o6.x - 45, o6.y - 25])
+
+
 
 
     for bullet in p1bullets:
         new_pos = move_bullet(bulletspeed, bullet[0], bullet[1])
         b = pygame.draw.circle(dis, white, new_pos, bulletsize)
-        if pygame.Rect.colliderect(b,p2):
+        if pygame.Rect.contains(p2,b):
             p2lives -= 1
             p1bullets.remove(bullet)
         else:
             for obstacle in oblist:
-                if pygame.Rect.colliderect(b,obstacle):
+                if pygame.Rect.colliderect(obstacle,b):
                     p1bullets.remove(bullet)
     for bullet in p2bullets:
         new_pos = move_bullet(bulletspeed, bullet[0], bullet[1])
         b = pygame.draw.circle(dis, white, new_pos, bulletsize)
-        if pygame.Rect.colliderect(b,p1):
+        if pygame.Rect.contains(p1,b):
             p1lives -= 1
             p2bullets.remove(bullet)
         for obstacle in oblist:
-            if pygame.Rect.colliderect(b,obstacle):
+            if pygame.Rect.colliderect(obstacle,b):
                 p2bullets.remove(bullet)
     message("P1 Score: " + str(p1score), white, 0, 0)
     message("P2 Score: " + str(p2score), white, displaysize[0] / 1.3, 0)
@@ -200,15 +224,14 @@ while not game_over:
     p1pos = move_player(p1speed, p1pos, joystick, p1, p1size)
     p2pos = move_player(p2speed, p2pos, keycontrols, p2,p2size)
     if keys[pygame.K_SPACE] and p1bulletcooldown == 0:
-        bulletposition = [p1pos[0] + p1size[0] / 2, p1pos[1] + p1size[1] / 2]
+        bulletposition = [p1pos[0], p1pos[1]]
         p1bullets.append([bulletposition, 0.8])
         p1bulletcooldown = 0.25
 
     if keys[pygame.K_RSHIFT] and p2bulletcooldown == 0:
-        bulletposition = [p2pos[0] + p2size[0] / 2, p2pos[1] + p2size[1] / 2]
+        bulletposition = [p2pos[0], p2pos[1]]
         p2bullets.append([bulletposition, 0.8])
         p2bulletcooldown = 0.25
-
     fps.tick(60)
 pygame.quit()
 quit()
