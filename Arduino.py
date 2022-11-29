@@ -233,7 +233,7 @@ while not game_over:
     p2sprite = pygame.transform.scale(p2image, [3 * p2size, 3 * p2size])
     p2sprite = pygame.transform.rotate(p2sprite, 360 - p2rotation)
 
-    if joystick[0] == 0 or joystick[1] == 0:
+    if joystick[0] == 0 ^ joystick[1] == 0:
         dis.blit(p1sprite, (p1.x-p1size,p1.y-p1size))
     else:
         dis.blit(p1sprite, (p1.x - 2*p1size, p1.y - 2*p1size))
@@ -304,12 +304,14 @@ while not game_over:
         dis.fill(black)
         message("Player One Wins", red, displaysize[0]/3, displaysize[1]/2)
         pygame.display.update()
+        oled_print('P1 Wins!')
         sleep(3)
         game_over = True
     if p2score == 5:
         dis.fill(black)
         message("Player Two Wins", blue, displaysize[0]/3, displaysize[1]/2)
         pygame.display.update()
+        oled_print('P2 Wins!')
         sleep(3)
         game_over = True
 
