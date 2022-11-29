@@ -80,13 +80,13 @@ o11 = pygame.draw.circle(dis, green, [displaysize[0] * 1 / 2, displaysize[1] * 5
 o11sprite = pygame.transform.scale(barrel, [60, 60])
 o12 = pygame.draw.circle(dis, green, [displaysize[0] * 5 / 6, displaysize[1] * 1 / 2], 25, 1)
 o12sprite = pygame.transform.scale(barrel, [60, 60])
-o13 = pygame.draw.circle(dis, green, [displaysize[0] * 1 / 2, displaysize[1] * 6 / 10], 25, 1)
-o13sprite = pygame.transform.scale(barrel, [60, 60])
-oblist = [o1, o2, o3, o4, o5, o6, o7, o8, o9, o10, o11, o12, o13]
+#o13 = pygame.draw.circle(dis, green, [displaysize[0] * 1 / 2, displaysize[1] * 6 / 10], 25, 1)
+#o13sprite = pygame.transform.scale(barrel, [60, 60])
+oblist = [o1, o2, o3, o4, o5, o6, o7, o8, o9, o10, o11, o12]
 
 # Displaying Text
 font = pygame.font.Font('freesansbold.ttf', 32)
-everyother = True
+everyother = 2
 def message (msg,colour,x,y):
     mesg = font.render(msg, True, colour)
     dis.blit(mesg, [x, y])
@@ -182,7 +182,7 @@ while not game_over:
     keys = pygame.key.get_pressed()
 
 #Joystick Movement
-    if everyother == True:
+    if everyother == 2:
         joystick = [0, 0]
         if keys[pygame.K_w]:
             joystick[1] = -1
@@ -192,9 +192,9 @@ while not game_over:
             joystick[0] = -1
         elif keys[pygame.K_d]:
             joystick[0] = 1
-        everyother = False
+        everyother = 0
     else:
-        everyother = True
+        everyother += 1
     #joystick.append(joystick_get_x())
     #joystick.append(joystick_get_y())
 
@@ -212,7 +212,7 @@ while not game_over:
     dis.fill(black)
     dis.blit(background, (0,0))
 
-    p1 = pygame.draw.circle(dis, black, p1pos, p1size, 1)
+    p1 = pygame.draw.circle(dis, sand, p1pos, p1size, 1)
     p1rotation = (getangle(joystick, p1rotation / 57.2958) * 57.2958)
     p1sprite = pygame.transform.scale(p1image, [4 * p1size, 4 * p1size])
     p1sprite = pygame.transform.rotate(p1sprite, 360 - p1rotation)
@@ -242,7 +242,7 @@ while not game_over:
     dis.blit(o9sprite, [o9.x, o9.y])
     dis.blit(o11sprite, [o11.x - 3, o11.y - 5])
     dis.blit(o12sprite, [o12.x - 3, o12.y - 5])
-    dis.blit(o13sprite, [o13.x - 3, o13.y - 5])
+   # dis.blit(o13sprite, [o13.x - 3, o13.y - 5])
     dis.blit(o5sprite, (o5.x-40, o5.y-20))
     dis.blit(o4sprite, (o4.x-48, o4.y-24))
 
