@@ -28,6 +28,7 @@ background = pygame.transform.scale(backgroundimage, displaysize)
 # Player Values
 p1size = 25
 p1speed = 4
+p1rotation = 0
 p1pos = [displaysize[0]/2,displaysize[1]/2]
 p1bullets = []
 p1bulletcooldown = 0
@@ -41,6 +42,7 @@ p1sprite = pygame.transform.scale(p1image, [2.5 *p1size, 2.5 *p1size])
 
 p2size = 25
 p2speed = 4
+p2rotation = 0
 p2pos = [0, displaysize[1]/3]
 p2bullets = []
 p2bulletcooldown = 0
@@ -176,7 +178,14 @@ while not game_over:
     oblist = [o1, o2, o3, o4, o5, o6, o7, o8, o9, o10, o11, o12, o13]
 
     p1 = pygame.draw.circle(dis, black, p1pos, p1size,1)
+    p1rotation = (getangle(joystick,p1rotation/57.2958) * 57.2958)
+    p1sprite = pygame.transform.scale(p1image, [2.5 * p1size, 2.5 * p1size])
+    p1sprite = pygame.transform.rotate(p1sprite,360 - p1rotation)
+
     p2 = pygame.draw.circle(dis, black, p2pos, p2size,1)
+    p2rotation = (getangle(keycontrols, p2rotation / 57.2958) * 57.2958)
+    p2sprite = pygame.transform.scale(p2image, [2*p2size, 2*p2size])
+    p2sprite = pygame.transform.rotate(p2sprite, 360 - p2rotation)
 
     dis.blit(p1sprite, (p1.x-2,p1.y - 10))
     dis.blit(p2sprite, (p2.x+1, p2.y-5))
