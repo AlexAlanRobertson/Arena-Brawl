@@ -150,6 +150,17 @@ while startup_screen == True and game_over == False:
     buttonpressed = digital_read(6)
     if buttonpressed == True:
         startup_screen = False
+        buzzer_frequency(5, 60)
+        sleep(1)
+        buzzer_stop(5)
+        sleep(1)
+        buzzer_frequency(5, 60)
+        sleep(1)
+        buzzer_stop(5)
+        sleep(1)
+        buzzer_frequency(5, 60)
+        sleep(1)
+        buzzer_stop(5)
 
     dis.fill(black)
     if message_displayed == True:
