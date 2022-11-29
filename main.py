@@ -18,6 +18,7 @@ red = (255, 0, 0)
 black = (0, 0, 0)
 yellow = (255,255,0)
 green = (34,139,34)
+sand = (194,178,128)
 
 # display
 displaysize = [800,600]
@@ -36,7 +37,6 @@ p1bulletangle = pi
 p1lives = 3
 p1score = 0
 p1image = pygame.image.load(os.path.join('venv', 'p1Sprite.png'))
-p1sprite = pygame.transform.scale(p1image, [2.5 *p1size, 2.5 *p1size])
 
 
 
@@ -58,6 +58,7 @@ bulletspeed = 10
 
 # Displaying Text
 font = pygame.font.Font('freesansbold.ttf', 32)
+everyother = True
 def message (msg,colour,x,y):
     mesg = font.render(msg, True, colour)
     dis.blit(mesg, [x, y])
@@ -127,15 +128,19 @@ while not game_over:
     keys = pygame.key.get_pressed()
 
 #Joystick Movement
-    joystick = [0, 0]
-    if keys[pygame.K_w]:
-        joystick[1] = -1
-    elif keys[pygame.K_s]:
-        joystick[1] = 1
-    if keys[pygame.K_a]:
-        joystick[0] = -1
-    elif keys[pygame.K_d]:
-        joystick[0] = 1
+    if everyother == True:
+        joystick = [0, 0]
+        if keys[pygame.K_w]:
+            joystick[1] = -1
+        elif keys[pygame.K_s]:
+            joystick[1] = 1
+        if keys[pygame.K_a]:
+            joystick[0] = -1
+        elif keys[pygame.K_d]:
+            joystick[0] = 1
+        everyother = False
+    else:
+        everyother = True
     #joystick.append(joystick_get_x())
     #joystick.append(joystick_get_y())
 
@@ -171,15 +176,15 @@ while not game_over:
 
     p1 = pygame.draw.circle(dis, black, p1pos, p1size, 1)
     p1rotation = (getangle(joystick, p1rotation / 57.2958) * 57.2958)
-    p1sprite = pygame.transform.scale(p1image, [2.5 * p1size, 2.5 * p1size])
+    p1sprite = pygame.transform.scale(p1image, [4 * p1size, 4 * p1size])
     p1sprite = pygame.transform.rotate(p1sprite, 360 - p1rotation)
 
-    p2 = pygame.draw.circle(dis, black, p2pos, p2size, 1)
+    p2 = pygame.draw.circle(dis, sand, p2pos, p2size, 1)
     p2rotation = (getangle(keycontrols, p2rotation / 57.2958) * 57.2958)
-    p2sprite = pygame.transform.scale(p2image, [2.5 * p2size, 2.5 * p2size])
+    p2sprite = pygame.transform.scale(p2image, [3 * p2size, 3 * p2size])
     p2sprite = pygame.transform.rotate(p2sprite, 360 - p2rotation)
 
-    dis.blit(p1sprite, (p1.x-2,p1.y - 10))
+    dis.blit(p1sprite, (p1.x-p1size,p1.y-p1size))
     dis.blit(p2sprite, (p2.x-p2size/2, p2.y-p2size/2))
     dis.blit(o5sprite, (o5.x-40, o5.y-20))
     dis.blit(o4sprite, (o4.x-48, o4.y-24))
