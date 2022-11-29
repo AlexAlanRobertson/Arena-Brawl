@@ -31,6 +31,7 @@ p1speed = 4
 p1pos = [displaysize[0]/2,displaysize[1]/2]
 p1bullets = []
 p1bulletcooldown = 0
+p1angle = 0
 p1lives = 3
 p1score = 0
 p1image = pygame.image.load(os.path.join('venv', 'p1Sprite.png'))
@@ -43,6 +44,7 @@ p2speed = 4
 p2pos = [0, displaysize[1]/3]
 p2bullets = []
 p2bulletcooldown = 0
+p2angle = 0
 p2lives = 3
 p2score = 0
 p2image = pygame.image.load(os.path.join('venv', 'p2image.gif'))
@@ -52,6 +54,7 @@ tree = pygame.image.load(os.path.join('venv', 'tree1.png'))
 # Bullet Values
 bulletsize = 5
 bulletspeed = 10
+
 
 # Displaying Text
 font = pygame.font.Font('freesansbold.ttf', 32)
@@ -86,6 +89,25 @@ def move_bullet(speed, position, angle):
     position [1] += speed * sin(angle)
     return position
 
+def getangle(joystick,angle):
+    if joystick == [0,0]:
+        return angle
+    elif joystick[0] == 0:
+        if joystick[1] < 0:
+            angle = pi*1.5
+        elif joystick[1] > 0:
+            angle = pi/2
+    elif joystick[1] == 0:
+        if joystick[0] > 0:
+            angle = 0
+        elif joystick[0] < 0:
+            angle = pi
+    elif joystick[0] > 0:
+        angle = atan(joystick[0]/joystick[1])
+    elif joystick[0] < 0:
+        angle = pi + (atan(joystick[0] / joystick[1]))
+
+    return angle
 
 
 while not game_over:
@@ -118,8 +140,8 @@ while not game_over:
         elif keys[pygame.K_d]:
             joystick[0] = 1
 
-        joystick[0] = (joystick_get_x())
-        joystick[1] = (joystick_get_y())
+        #joystick[0] = (joystick_get_x())
+        #joystick[1] = (joystick_get_y())
     else:
         everyother = False
 
@@ -211,14 +233,19 @@ while not game_over:
         # Move entities
     p1pos = move_player(p1speed, p1pos, joystick, p1, p1size)
     p2pos = move_player(p2speed, p2pos, keycontrols, p2,p2size)
+
+    #Bullets
+    p1angle = getangle(joystick,p1angle)
+    p2angle = getangle(keycontrols,p2angle)
+
     if keys[pygame.K_SPACE] and p1bulletcooldown == 0:
         bulletposition = [p1pos[0], p1pos[1]]
-        p1bullets.append([bulletposition, 0.8])
+        p1bullets.append([bulletposition, p1angle])
         p1bulletcooldown = 0.25
 
     if keys[pygame.K_RSHIFT] and p2bulletcooldown == 0:
         bulletposition = [p2pos[0], p2pos[1]]
-        p2bullets.append([bulletposition, 0.8])
+        p2bullets.append([bulletposition, p2angle])
         p2bulletcooldown = 0.25
 
     fps.tick(60)
