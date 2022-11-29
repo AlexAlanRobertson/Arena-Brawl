@@ -109,7 +109,7 @@ def getangle(joystick,angle):
 
     return angle
 
-startup_screen = True
+startup_screen = False
 buttonpressed = False
 message_displayed = True
 
@@ -205,13 +205,20 @@ while not game_over:
     p1sprite = pygame.transform.scale(p1image, [4 * p1size, 4 * p1size])
     p1sprite = pygame.transform.rotate(p1sprite, 360 - p1rotation)
 
-    p2 = pygame.draw.circle(dis, sand, p2pos, p2size, 1)
+    p2 = pygame.draw.circle(dis, black, p2pos, p2size, 1)
     p2rotation = (getangle(keycontrols, p2rotation / 57.2958) * 57.2958)
     p2sprite = pygame.transform.scale(p2image, [3 * p2size, 3 * p2size])
     p2sprite = pygame.transform.rotate(p2sprite, 360 - p2rotation)
 
-    dis.blit(p1sprite, (p1.x-p1size,p1.y-p1size))
-    dis.blit(p2sprite, (p2.x-p2size/2, p2.y-p2size/2))
+    if joystick [0] == 0 or joystick[1] == 0:
+        dis.blit(p1sprite, (p1.x-p1size,p1.y-p1size))
+    else:
+        dis.blit(p1sprite, (p1.x - 2*p1size, p1.y - 2*p1size))
+
+    if keycontrols[0] == 0 or keycontrols[1] == 0:
+        dis.blit(p2sprite, (p2.x-p2size/2, p2.y-p2size/2))
+    else:
+        dis.blit(p2sprite, (p2.x - p2size, p2.y - p2size))
     dis.blit(o5sprite, (o5.x-40, o5.y-20))
     dis.blit(o4sprite, (o4.x-48, o4.y-24))
 
