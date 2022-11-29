@@ -43,14 +43,13 @@ p1sprite = pygame.transform.scale(p1image, [2.5 *p1size, 2.5 *p1size])
 p2size = 25
 p2speed = 4
 p2rotation = 0
-p2pos = [0, displaysize[1]/3]
+p2pos = [45, displaysize[1]/3]
 p2bullets = []
 p2bulletcooldown = 0
 p2bulletangle = 0
 p2lives = 3
 p2score = 0
 p2image = pygame.image.load(os.path.join('venv', 'p2image.gif'))
-p2sprite = pygame.transform.scale(p2image, [2*p2size, 2*p2size])
 
 tree = pygame.image.load(os.path.join('venv', 'tree1.png'))
 # Bullet Values
@@ -177,11 +176,11 @@ while not game_over:
 
     p2 = pygame.draw.circle(dis, black, p2pos, p2size, 1)
     p2rotation = (getangle(keycontrols, p2rotation / 57.2958) * 57.2958)
-    p2sprite = pygame.transform.scale(p2image, [2 * p2size, 2 * p2size])
+    p2sprite = pygame.transform.scale(p2image, [2.5 * p2size, 2.5 * p2size])
     p2sprite = pygame.transform.rotate(p2sprite, 360 - p2rotation)
 
     dis.blit(p1sprite, (p1.x-2,p1.y - 10))
-    dis.blit(p2sprite, (p2.x+1, p2.y-5))
+    dis.blit(p2sprite, (p2.x-p2size/2, p2.y-p2size/2))
     dis.blit(o5sprite, (o5.x-40, o5.y-20))
     dis.blit(o4sprite, (o4.x-48, o4.y-24))
 
@@ -204,9 +203,10 @@ while not game_over:
         if pygame.Rect.colliderect(p1,b):
             p1lives -= 1
             p2bullets.remove(bullet)
-        for obstacle in oblist:
-            if pygame.Rect.colliderect(obstacle,b):
-                p2bullets.remove(bullet)
+        else:
+            for obstacle in oblist:
+                if pygame.Rect.colliderect(obstacle,b):
+                    p2bullets.remove(bullet)
     message("P1 Score: " + str(p1score), white, 0, 0)
     message("P2 Score: " + str(p2score), white, displaysize[0] / 1.3, 0)
     pygame.display.update()
