@@ -132,10 +132,10 @@ while not game_over:
      # Visual output
     dis.fill(black)
     dis.blit(background, (0,0))
-    o1 = pygame.draw.circle(dis, green, [displaysize[0] / 3, displaysize[1] / 3], 20, 1)
-
-    o2 = pygame.draw.circle(dis, green, [displaysize[0] * 2 / 3, displaysize[1] / 3], 30 ,1)
-
+    o1 = pygame.draw.circle(dis, green, [displaysize[0] / 3, displaysize[1] / 3], 25, 1)
+    o1sprite = pygame.transform.scale(barrel, [60, 60])
+    o2 = pygame.draw.circle(dis, green, [displaysize[0] * 2 / 3, displaysize[1] / 3], 25 ,1)
+    o2sprite = pygame.transform.scale(barrel, [60, 60])
     o3 = pygame.draw.circle(dis, green, [displaysize[0] / 3, displaysize[1] * 2 / 3], 45, 1)
     o3sprite = pygame.transform.scale(tree, [200, 150])
     o4 = pygame.draw.circle(dis, green, [displaysize[0] * 2 / 3, displaysize[1] * 2 / 3], 45,1)
@@ -144,20 +144,20 @@ while not game_over:
     o5sprite = pygame.transform.scale(tree,[145,105])
     o6 = pygame.draw.circle(dis, green, [displaysize[0] * 5 / 6, displaysize[1] * 5 / 6], 30, 1)
     o6sprite = pygame.transform.scale(tree, [155, 115])
-    o7 = pygame.draw.circle(dis, green, [displaysize[0] * 1 / 6, displaysize[1] * 5 / 6], 20, 1)
-
+    o7 = pygame.draw.circle(dis, green, [displaysize[0] * 1 / 6, displaysize[1] * 5 / 6], 25, 1)
+    o7sprite = pygame.transform.scale(barrel, [60, 60])
     o8 = pygame.draw.circle(dis, green, [displaysize[0] * 5 / 6, displaysize[1] * 1 / 6], 25, 1)
-
+    o8sprite = pygame.transform.scale(barrel, [60, 60])
     o9 = pygame.draw.circle(dis, green, [displaysize[0] * 1 / 6, displaysize[1] * 1 / 2], 30, 1)
-
+    o9sprite = pygame.transform.scale(barrel, [60, 60])
     o10 = pygame.draw.circle(dis, green, [displaysize[0] * 1 / 2, displaysize[1] * 1 / 6], 40, 1)
     o10sprite = pygame.transform.scale(tree, [190, 140])
     o11 = pygame.draw.circle(dis, green, [displaysize[0] * 1 / 2, displaysize[1] * 5 / 6], 25, 1)
-
-    o12 = pygame.draw.circle(dis, green, [displaysize[0] * 5 / 6, displaysize[1] * 1 / 2], 30, 1)
-
-    o13 = pygame.draw.circle(dis, green, [displaysize[0] * 1 / 2, displaysize[1] * 6 / 10], 30, 1)
-
+    o11sprite = pygame.transform.scale(barrel, [60, 60])
+    o12 = pygame.draw.circle(dis, green, [displaysize[0] * 5 / 6, displaysize[1] * 1 / 2], 25, 1)
+    o12sprite = pygame.transform.scale(barrel, [60, 60])
+    o13 = pygame.draw.circle(dis, green, [displaysize[0] * 1 / 2, displaysize[1] * 6 / 10], 25, 1)
+    o13sprite = pygame.transform.scale(barrel, [60, 60])
     oblist = [o1, o2, o3, o4, o5, o6, o7, o8, o9, o10, o11, o12, o13]
 
     p1 = pygame.draw.circle(dis, black, p1pos, p1size,1)
@@ -170,6 +170,14 @@ while not game_over:
     dis.blit(o3sprite, [o3.x - 55, o3.y - 35])
     dis.blit(o10sprite, [o10.x - 55, o10.y - 35])
     dis.blit(o6sprite, [o6.x - 45, o6.y - 25])
+    dis.blit(o7sprite, [o7.x -3, o7.y - 5])
+    dis.blit(o2sprite, [o2.x - 3, o2.y - 5])
+    dis.blit(o1sprite, (o1.x - 3, o1.y - 5))
+    dis.blit(o8sprite, (o8.x -3, o8.y - 5))
+    dis.blit(o9sprite, [o9.x, o9.y])
+    dis.blit(o11sprite, [o11.x - 3, o11.y - 5])
+    dis.blit(o12sprite, [o12.x - 3, o12.y -5])
+    dis.blit(o13sprite, [o13.x - 3, o13.y -5])
 
 
 

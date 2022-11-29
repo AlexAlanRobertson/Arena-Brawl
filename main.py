@@ -177,6 +177,8 @@ while not game_over:
     dis.blit(o4sprite, (o4.x-48, o4.y-24))
 
 
+
+
     for bullet in p1bullets:
         new_pos = move_bullet(bulletspeed, bullet[0], bullet[1])
         b = pygame.draw.circle(dis, white, new_pos, bulletsize)
