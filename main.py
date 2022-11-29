@@ -23,14 +23,13 @@ sand = (194,178,128)
 # display
 displaysize = [800,600]
 dis = pygame.display.set_mode((displaysize[0], displaysize[1]))
-startup_screen = True
 backgroundimage = pygame.image.load(os.path.join('venv', 'background3.png'))
 background = pygame.transform.scale(backgroundimage, displaysize)
 # Player Values
 p1size = 25
 p1speed = 4
 p1rotation = 180
-p1pos = [displaysize[0]/2,displaysize[1]/2]
+p1pos = [750, displaysize[1] / 2]
 p1bullets = []
 p1bulletcooldown = 0
 p1bulletangle = pi
@@ -43,7 +42,7 @@ p1image = pygame.image.load(os.path.join('venv', 'p1Sprite.png'))
 p2size = 25
 p2speed = 4
 p2rotation = 0
-p2pos = [45, displaysize[1]/3]
+p2pos = [10,displaysize[1]/2]
 p2bullets = []
 p2bulletcooldown = 0
 p2bulletangle = 0
@@ -56,6 +55,34 @@ barrel = pygame.image.load(os.path.join('venv', 'barrel.png'))
 # Bullet Values
 bulletsize = 5
 bulletspeed = 10
+
+o1 = pygame.draw.circle(dis, green, [displaysize[0] / 3, displaysize[1] / 3], 25, 1)
+o1sprite = pygame.transform.scale(barrel, [60, 60])
+o2 = pygame.draw.circle(dis, green, [displaysize[0] * 2 / 3, displaysize[1] / 3], 25, 1)
+o2sprite = pygame.transform.scale(barrel, [60, 60])
+o3 = pygame.draw.circle(dis, green, [displaysize[0] / 3, displaysize[1] * 2 / 3], 45, 1)
+o3sprite = pygame.transform.scale(tree, [200, 150])
+o4 = pygame.draw.circle(dis, green, [displaysize[0] * 2 / 3, displaysize[1] * 2 / 3], 45, 1)
+o4sprite = pygame.transform.scale(tree, [182, 130])
+o5 = pygame.draw.circle(dis, green, [displaysize[0] * 1 / 6, displaysize[1] * 1 / 6], 35, 1)
+o5sprite = pygame.transform.scale(tree, [145, 105])
+o6 = pygame.draw.circle(dis, green, [displaysize[0] * 5 / 6, displaysize[1] * 5 / 6], 30, 1)
+o6sprite = pygame.transform.scale(tree, [155, 115])
+o7 = pygame.draw.circle(dis, green, [displaysize[0] * 1 / 6, displaysize[1] * 5 / 6], 25, 1)
+o7sprite = pygame.transform.scale(barrel, [60, 60])
+o8 = pygame.draw.circle(dis, green, [displaysize[0] * 5 / 6, displaysize[1] * 1 / 6], 25, 1)
+o8sprite = pygame.transform.scale(barrel, [60, 60])
+o9 = pygame.draw.circle(dis, green, [displaysize[0] * 1 / 6, displaysize[1] * 1 / 2], 30, 1)
+o9sprite = pygame.transform.scale(barrel, [60, 60])
+o10 = pygame.draw.circle(dis, green, [displaysize[0] * 1 / 2, displaysize[1] * 1 / 6], 40, 1)
+o10sprite = pygame.transform.scale(tree, [190, 140])
+o11 = pygame.draw.circle(dis, green, [displaysize[0] * 1 / 2, displaysize[1] * 5 / 6], 25, 1)
+o11sprite = pygame.transform.scale(barrel, [60, 60])
+o12 = pygame.draw.circle(dis, green, [displaysize[0] * 5 / 6, displaysize[1] * 1 / 2], 25, 1)
+o12sprite = pygame.transform.scale(barrel, [60, 60])
+o13 = pygame.draw.circle(dis, green, [displaysize[0] * 1 / 2, displaysize[1] * 6 / 10], 25, 1)
+o13sprite = pygame.transform.scale(barrel, [60, 60])
+oblist = [o1, o2, o3, o4, o5, o6, o7, o8, o9, o10, o11, o12, o13]
 
 # Displaying Text
 font = pygame.font.Font('freesansbold.ttf', 32)
@@ -110,7 +137,7 @@ def getangle(joystick,angle):
 
     return angle
 
-startup_screen = False
+startup_screen = True
 buttonpressed = False
 message_displayed = True
 
@@ -184,40 +211,13 @@ while not game_over:
      # Visual output
     dis.fill(black)
     dis.blit(background, (0,0))
-    o1 = pygame.draw.circle(dis, green, [displaysize[0] / 3, displaysize[1] / 3], 25, 1)
-    o1sprite = pygame.transform.scale(barrel, [60, 60])
-    o2 = pygame.draw.circle(dis, green, [displaysize[0] * 2 / 3, displaysize[1] / 3], 25, 1)
-    o2sprite = pygame.transform.scale(barrel, [60, 60])
-    o3 = pygame.draw.circle(dis, green, [displaysize[0] / 3, displaysize[1] * 2 / 3], 45, 1)
-    o3sprite = pygame.transform.scale(tree, [200, 150])
-    o4 = pygame.draw.circle(dis, green, [displaysize[0] * 2 / 3, displaysize[1] * 2 / 3], 45, 1)
-    o4sprite = pygame.transform.scale(tree, [182, 130])
-    o5 = pygame.draw.circle(dis, green, [displaysize[0] * 1 / 6, displaysize[1] * 1 / 6], 35, 1)
-    o5sprite = pygame.transform.scale(tree, [145, 105])
-    o6 = pygame.draw.circle(dis, green, [displaysize[0] * 5 / 6, displaysize[1] * 5 / 6], 30, 1)
-    o6sprite = pygame.transform.scale(tree, [155, 115])
-    o7 = pygame.draw.circle(dis, green, [displaysize[0] * 1 / 6, displaysize[1] * 5 / 6], 25, 1)
-    o7sprite = pygame.transform.scale(barrel, [60, 60])
-    o8 = pygame.draw.circle(dis, green, [displaysize[0] * 5 / 6, displaysize[1] * 1 / 6], 25, 1)
-    o8sprite = pygame.transform.scale(barrel, [60, 60])
-    o9 = pygame.draw.circle(dis, green, [displaysize[0] * 1 / 6, displaysize[1] * 1 / 2], 30, 1)
-    o9sprite = pygame.transform.scale(barrel, [60, 60])
-    o10 = pygame.draw.circle(dis, green, [displaysize[0] * 1 / 2, displaysize[1] * 1 / 6], 40, 1)
-    o10sprite = pygame.transform.scale(tree, [190, 140])
-    o11 = pygame.draw.circle(dis, green, [displaysize[0] * 1 / 2, displaysize[1] * 5 / 6], 25, 1)
-    o11sprite = pygame.transform.scale(barrel, [60, 60])
-    o12 = pygame.draw.circle(dis, green, [displaysize[0] * 5 / 6, displaysize[1] * 1 / 2], 25, 1)
-    o12sprite = pygame.transform.scale(barrel, [60, 60])
-    o13 = pygame.draw.circle(dis, green, [displaysize[0] * 1 / 2, displaysize[1] * 6 / 10], 25, 1)
-    o13sprite = pygame.transform.scale(barrel, [60, 60])
-    oblist = [o1, o2, o3, o4, o5, o6, o7, o8, o9, o10, o11, o12, o13]
 
-    p1 = pygame.draw.circle(dis, black, p1pos, p1size, 1)
+    p1 = pygame.draw.circle(dis, sand, p1pos, p1size, 1)
     p1rotation = (getangle(joystick, p1rotation / 57.2958) * 57.2958)
     p1sprite = pygame.transform.scale(p1image, [4 * p1size, 4 * p1size])
     p1sprite = pygame.transform.rotate(p1sprite, 360 - p1rotation)
 
-    p2 = pygame.draw.circle(dis, black, p2pos, p2size, 1)
+    p2 = pygame.draw.circle(dis, sand, p2pos, p2size, 1)
     p2rotation = (getangle(keycontrols, p2rotation / 57.2958) * 57.2958)
     p2sprite = pygame.transform.scale(p2image, [3 * p2size, 3 * p2size])
     p2sprite = pygame.transform.rotate(p2sprite, 360 - p2rotation)
@@ -277,11 +277,17 @@ while not game_over:
     if p1lives == 0:
         sleep(1)
         p2score += 1
+        p2lives = 3
         p1lives = 3
+        p1pos = [750, displaysize[1] / 2]
+        p2pos = [10,displaysize[1]/2]
     elif p2lives == 0:
         sleep(1)
         p1score += 1
+        p1lives = 3
         p2lives = 3
+        p1pos = [750, displaysize[1]/2]
+        p2pos = [10, displaysize[1] / 2]
 
     if p1score == 5:
         dis.fill(black)
