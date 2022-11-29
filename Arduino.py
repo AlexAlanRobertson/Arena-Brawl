@@ -233,7 +233,7 @@ while not game_over:
     p2sprite = pygame.transform.scale(p2image, [3 * p2size, 3 * p2size])
     p2sprite = pygame.transform.rotate(p2sprite, 360 - p2rotation)
 
-    if joystick[0] == 0 ^ joystick[1] == 0:
+    if int(p1rotation % 90) == 0:
         dis.blit(p1sprite, (p1.x-p1size,p1.y-p1size))
     else:
         dis.blit(p1sprite, (p1.x - 2*p1size, p1.y - 2*p1size))
