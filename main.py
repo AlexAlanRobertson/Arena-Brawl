@@ -4,6 +4,7 @@ from time import sleep
 import random
 from math import *
 import os
+
 pygame.init()
 dis = pygame.display.set_mode((800, 600))
 pygame.display.update()
@@ -192,21 +193,23 @@ while not game_over:
             joystick[0] = -1
         elif keys[pygame.K_d]:
             joystick[0] = 1
+
+        keycontrols = [0, 0]
+        if keys[pygame.K_o]:
+            keycontrols[1] = -1
+        elif keys[pygame.K_l]:
+            keycontrols[1] = 1
+        if keys[pygame.K_k]:
+            keycontrols[0] = -1
+        elif keys[pygame.K_SEMICOLON]:
+            keycontrols[0] = 1
         everyother = 0
     else:
         everyother += 1
     #joystick.append(joystick_get_x())
     #joystick.append(joystick_get_y())
 
-    keycontrols = [0, 0]
-    if keys[pygame.K_UP]:
-        keycontrols[1] = -1
-    elif keys[pygame.K_DOWN]:
-        keycontrols[1] = 1
-    if keys[pygame.K_LEFT]:
-        keycontrols[0] = -1
-    elif keys[pygame.K_RIGHT]:
-        keycontrols[0] = 1
+
 
      # Visual output
     dis.fill(black)
@@ -314,7 +317,7 @@ while not game_over:
         p1bullets.append([bulletposition, p1bulletangle])
         p1bulletcooldown = 0.25
 
-    if keys[pygame.K_RSHIFT] and p2bulletcooldown == 0:
+    if keys[pygame.K_DOWN] and p2bulletcooldown == 0:
         bulletposition = [p2pos[0], p2pos[1]]
         p2bullets.append([bulletposition, p2bulletangle])
         p2bulletcooldown = 0.25
