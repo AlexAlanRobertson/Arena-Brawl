@@ -53,6 +53,7 @@ p2image = pygame.image.load(os.path.join('venv', 'p2image.gif'))
 
 tree = pygame.image.load(os.path.join('venv', 'tree1.png'))
 barrel = pygame.image.load(os.path.join('venv', 'barrel.png'))
+logo = pygame.image.load(os.path.join('venv', 'TAKECOVERLOGO.png'))
 # Bullet Values
 bulletsize = 5
 bulletspeed = 10
@@ -156,9 +157,10 @@ while startup_screen == True and game_over == False:
     message("Movement: WASD", blue, 30, 150)
     message('Shoot: SPACE', blue, 30, 200)
 
-    message("Player 2:", white, 30, 100)
-    message("Movement: WASD", blue, 30, 150)
-    message('Shoot: SPACE', blue, 30, 200)
+    message("Player 1:", white, displaysize[0] - 350, 100)
+    message("Movement: OKL;", red, displaysize[0] - 350, 150)
+    message('Shoot: RSHIFT', red, displaysize[0] - 350, 200)
+
     if message_displayed == True:
         message("Hold the Spacebar to Start the Game", white, 110, displaysize[1]*0.8)
         pygame.display.update()
