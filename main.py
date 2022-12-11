@@ -138,7 +138,7 @@ def getangle(joystick,angle):
 
     return angle
 
-startup_screen = False
+startup_screen = True
 buttonpressed = False
 message_displayed = True
 
@@ -147,14 +147,20 @@ while startup_screen == True and game_over == False:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             game_over = True
-
-    buttonpressed = False
-    if buttonpressed == True:
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_SPACE] == True:
         startup_screen = False
 
     dis.fill(black)
+    message("Player 2:", white, 30,100)
+    message("Movement: WASD", blue, 30, 150)
+    message('Shoot: SPACE', blue, 30, 200)
+
+    message("Player 2:", white, 30, 100)
+    message("Movement: WASD", blue, 30, 150)
+    message('Shoot: SPACE', blue, 30, 200)
     if message_displayed == True:
-        message("Hold the Button to Start the Game", white, 140, displaysize[1]/2)
+        message("Hold the Spacebar to Start the Game", white, 110, displaysize[1]*0.8)
         pygame.display.update()
         sleep(0.8)
         message_displayed = False
